@@ -260,9 +260,17 @@ body.scrolled .layout-header {
   color: var(--color-accent);
 }
 
+/* MOBILE PORTRAIT — полностью скрываем SOCIAL BAR */
+@media (max-width: 600px) and (orientation: portrait) {
+  .social-bar {
+    display: none !important;
+  }
+}
+
+
 /* ============================================================
-   HERO — полностью динамический, fluid, без media-queries
-   ============================================================ */
+   HERO — динамичный, fluid, без media-queries
+============================================================ */
 .hero {
     min-height: calc(100dvh - var(--header-height) - 3vh);
 
@@ -274,7 +282,6 @@ body.scrolled .layout-header {
     align-items: center;
     text-align: center;
 
-    /* Поддержка параллакса и слоёв */
     position: relative;
     overflow: hidden;
 }
@@ -282,8 +289,8 @@ body.scrolled .layout-header {
 
 
 /* ============================================================
-   HERO BACKGROUND — один слой + адаптация под мобильный портрет
-   ============================================================ */
+   HERO BACKGROUND — единый корректный слой (::after)
+============================================================ */
 .hero::after {
     content: "";
     position: absolute;
@@ -294,68 +301,39 @@ body.scrolled .layout-header {
     background-position: center;
     background-repeat: no-repeat;
 
-    filter: blur(4px);
-    transform: scale(1.06); /* базовое увеличение для всех экранов */
-    transform-origin: center center;
+    /* базовое размытие и масштаб */
+    filter: blur(0.5px);
+    transform: scale(1.06);
+    transform-origin: center;
 
-    z-index: -1;
+    z-index: -2;
 }
+
+
 
 /* ============================================================
    MOBILE PORTRAIT — поворот фона на 90° + компенсация масштаба
-   ============================================================ */
+============================================================ */
+
 @media (max-width: 600px) and (orientation: portrait) {
     .hero::after {
-        transform: rotate(90deg) scale(1.35);  /* поворот + увеличение */
+        transform: rotate(90deg) scale(2.15);
+        transform-origin: center;
+
+        background-size: contain !important;
+
+        /* Поднимаем фон вверх, чтобы нижняя надпись ушла */
+        background-position: calc(50% -6%) calc(50% + 45%) !important;
+
+        background-repeat: no-repeat !important;
     }
 }
 
 
-
 /* ============================================================
-   ::before — глобальное затемнение + премиальные градиенты
-   ============================================================ */
-.hero::before {
-    content: "";
-    position: absolute;
-    inset: 0;
-
-    background: linear-gradient(
-        rgba(0,0,0,0.70) 0%,
-        rgba(0,0,0,0.40) 35%,
-        rgba(0,0,0,0.55) 100%
-    );
-
-    z-index: 0;
-    pointer-events: none;
-}
-
-
-
-/* ============================================================
-   LAYER 1 — Размытый фон (::after)
-   ============================================================ */
-.hero::after {
-    content: "";
-    position: absolute;
-    inset: 0;
-
-    background-image: url('../images/background_3.png');
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-
-    filter: blur(0.5px);
-    transform: scale(1.06); /* убрать края после blur */
-
-    z-index: -1; /* самый нижний слой */
-}
-
-
-
-/* ============================================================
-   LAYER 2 — затемнение + виньетка + шум (::before)
-   ============================================================ */
+   HERO OVERLAY LAYER (::before)
+   — глобальное затемнение + виньетка + шум
+============================================================ */
 .hero::before {
     content: "";
     position: absolute;
@@ -368,7 +346,7 @@ body.scrolled .layout-header {
             rgba(0,0,0,0) 40%,
             rgba(0,0,0,0.55) 100%
         ),
-        /* Темный вертикальный градиент */
+        /* Вертикальный градиент */
         linear-gradient(
             rgba(0,0,0,0.70) 0%,
             rgba(0,0,0,0.40) 35%,
@@ -380,7 +358,7 @@ body.scrolled .layout-header {
     opacity: 0.22;
     mix-blend-mode: overlay;
 
-    z-index: 0;
+    z-index: -1;
     pointer-events: none;
 }
 
@@ -388,7 +366,7 @@ body.scrolled .layout-header {
 
 /* ============================================================
    HERO CONTENT — центральная адаптивная колонна
-   ============================================================ */
+============================================================ */
 .hero__container {
     position: relative;
     z-index: 3;
@@ -905,8 +883,8 @@ body.scrolled .layout-header {
 
 .benefits__grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-  gap: 32px;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 24px;
 }
 
 .benefit-card {
@@ -926,7 +904,7 @@ body.scrolled .layout-header {
 .benefit-card__icon img {
   height: 80px;
   object-fit: contain;
-  filter: brightness(0) saturate(100%) invert(28%) sepia(98%) saturate(7496%) hue-rotate(358deg) brightness(98%) contrast(109%);
+  filter: invert(14%) sepia(87%) saturate(7480%) hue-rotate(356deg) brightness(93%) contrast(118%);
 }
 
 .benefit-card__title {
@@ -939,6 +917,13 @@ body.scrolled .layout-header {
   margin-top: 10px;
   font-size: 15px;
   color: #ddd;
+}
+
+/* ДЕСКТОП — всегда 4 в строку */
+@media (min-width: 992px) {
+  .benefits__grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
 }
 
 /* CALCULATOR --------------------------------------------------------------- */
@@ -1200,11 +1185,11 @@ body.scrolled .layout-header {
 /* Кнопка "Индивидуально" */
 .size-selector__button--outline {
   background: transparent;
-  height: 44px;                     /* фиксированная высота */
+  height: 44px;
   display: flex;
   align-items: center;
   justify-content: center;
-  min-width: 100%;                  /* чтобы ширина не прыгала */
+  min-width: 100%;
 }
 
 .size-selector__button:hover {
@@ -1220,25 +1205,25 @@ body.scrolled .layout-header {
 
 /* Поля Ш × Д — строго В ОДНОЙ СТРОКЕ */
 .size-selector__custom {
-  display: none;                    /* по умолчанию скрыт */
+  display: none;
   flex-direction: row;
   align-items: center;
   justify-content: flex-start;
-  gap: 10px;                        /* расстояние между элементами */
+  gap: 10px;
   margin-top: 14px;
 }
 
 .size-selector__row {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    gap: 10px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 10px;
 }
 
 /* Поля Ш и Д */
 .size-selector__input {
   width: 70px;
-  min-width: 70px;                  /* фиксируем, чтобы не схлопывались */
+  min-width: 70px;
   padding: 8px 10px;
   border-radius: 8px;
   border: 1px solid #ccc;
@@ -1254,7 +1239,7 @@ body.scrolled .layout-header {
   font-size: 18px;
   font-weight: 700;
   color: #000;
-  width: 20px;                      /* фиксированная ширина */
+  width: 20px;
   line-height: 1;
 }
 
@@ -1262,7 +1247,7 @@ body.scrolled .layout-header {
 .size-selector__ok {
   padding: 8px 14px;
   height: 40px;
-  min-width: 55px;                   /* чтобы OK не расползался */
+  min-width: 55px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -1270,7 +1255,7 @@ body.scrolled .layout-header {
   background: var(--color-accent);
   color: #fff;
   font-size: 13px;
-  white-space: nowrap;               /* текст не переносится */
+  white-space: nowrap;
 }
 
 
@@ -1342,6 +1327,7 @@ body.scrolled .layout-header {
 .product-sheet--open .product-sheet__panel {
   bottom: 0;
 }
+
 /* =========================================================
    PRODUCT SHEET — CUSTOM SCROLLBAR (как в галерее)
 ========================================================= */
@@ -1352,6 +1338,7 @@ body.scrolled .layout-header {
 
 .product-sheet__panel::-webkit-scrollbar-track {
   background: transparent;
+}
 
 .product-sheet__panel::-webkit-scrollbar-thumb {
   background: var(--color-bg-alt);
@@ -1360,6 +1347,7 @@ body.scrolled .layout-header {
 
 .product-sheet__panel::-webkit-scrollbar-thumb:hover {
   background: var(--color-accent-hover);
+}
 
 /* Firefox */
 .product-sheet__panel {
@@ -1421,9 +1409,16 @@ body.scrolled .layout-header {
   }
 
   .product-sheet__layout {
-    grid-template-columns: 1fr;
+    grid-template-columns: 1fr !important;
     gap: 20px;
-    overflow-y: visible;              /* layout НЕ должен прокручиваться */
+    overflow-y: visible;
   }
 }
 
+@media (max-width: 600px) {
+  .product-sheet__layout {
+    grid-template-columns: 1fr !important;
+    gap: 20px;
+    overflow-y: visible;
+  }
+}
