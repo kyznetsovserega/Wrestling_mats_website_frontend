@@ -1,0 +1,1419 @@
+/* ========================================================================== */
+/* LANDING.CSS — Prospect Boxing (BEM)                                        */
+/* ========================================================================== */
+
+/* ============================================================
+   SUPER FLUID HEADER — премиальная адаптация 2025
+============================================================ */
+
+/* Главная переменная высоты */
+:root {
+  --header-height: clamp(56px, 8vw, 92px);
+}
+
+/* ------------------------------------------------------------
+   БАЗОВЫЙ HEADER
+------------------------------------------------------------ */
+.layout-header {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: var(--header-height);
+
+  display: flex;
+  align-items: center;
+
+  padding-inline: clamp(12px, 4vw, 40px);
+
+  background: transparent;
+  transition: background .35s ease, box-shadow .35s ease, backdrop-filter .35s ease;
+  z-index: 9999;
+
+  overflow: visible; /* ← фикс обрезания крестика */
+}
+
+/* Header on scroll */
+body.scrolled .layout-header {
+  background: rgba(255,255,255,0.85);
+  box-shadow: 0 4px 28px rgba(0,0,0,.4);
+  backdrop-filter: blur(8px);
+}
+
+/* ------------------------------------------------------------
+   ВНУТРЕННЯЯ СЕТКА
+------------------------------------------------------------ */
+.layout-header__inner {
+  width: 100%;
+  height: 100%;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  gap: clamp(12px, 3vw, 48px);
+}
+
+/* ------------------------------------------------------------
+   ЛОГО
+------------------------------------------------------------ */
+.layout-header__logo {
+  width: var(--header-height);
+  height: var(--header-height);
+
+  background: #000;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  box-shadow: 0 0 22px rgba(255,255,255,.06);
+}
+
+.layout-header__logo img {
+  width: clamp(60%, 75%, 85%);
+  height: auto;
+}
+
+/* ------------------------------------------------------------
+   DESKTOP NAVIGATION
+------------------------------------------------------------ */
+.main-nav {
+  display: flex;
+  align-items: center;
+  gap: clamp(16px, 3vw, 52px);
+}
+
+.main-nav__link {
+  font-size: clamp(14px, 1.2vw, 20px);
+  color: #bbb;
+  font-weight: 500;
+  transition: .25s ease;
+  white-space: nowrap;
+}
+
+.main-nav__link:hover {
+  color: var(--color-accent);
+}
+
+/* ------------------------------------------------------------
+   CTA Кнопка
+------------------------------------------------------------ */
+.layout-header__cta {
+  height: var(--header-height);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding-inline: clamp(20px, 4vw, 40px);
+  border-radius: clamp(6px, 1vw, 14px);
+
+  font-size: clamp(15px, 1.2vw, 22px);
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+/* ------------------------------------------------------------
+   БУРГЕР
+------------------------------------------------------------ */
+.burger {
+  display: none;
+  width: clamp(56px, 10vw, 80px);
+  height: clamp(40px, 8vw, 64px);
+  cursor: pointer;
+  position: relative;
+  z-index: 20000;
+}
+
+/* Иконка */
+.burger__icon {
+  font-size: clamp(26px, 7vw, 40px);
+  line-height: 1;
+  color: #000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: "Inter", monospace;
+  font-weight: 900;
+}
+
+/* СТАТУС: закрыто → стрелка вперед (красивая) */
+.burger:not(.active) .burger__icon::before { content: "☰"; }
+
+/* СТАТУС: открыто → геометрический крест */
+.burger.active .burger__icon::before { content: "✖"; }
+
+
+
+
+/* ------------------------------------------------------------
+   MOBILE NAV (единая версия!)
+------------------------------------------------------------ */
+.mobile-nav {
+  display: none;
+  flex-direction: column;
+
+  position: absolute;
+  top: var(--header-height);
+  left: 0;
+  width: 100%;
+
+  padding: clamp(20px, 5vw, 32px) clamp(16px, 4vw, 32px);
+
+  background: rgba(0,0,0,.95);
+  border-bottom: 1px solid rgba(255,255,255,0.12);
+
+  gap: clamp(14px, 4vw, 28px);
+
+  z-index: 9998;
+
+  overflow: visible; /* ← чтобы "X" не обрезался */
+}
+
+.mobile-nav.show {
+  display: flex;
+}
+
+.mobile-nav__link {
+  color: #ccc;
+  font-size: clamp(16px, 5vw, 26px);
+  font-weight: 500;
+}
+
+.mobile-nav__link--accent {
+  color: var(--color-accent);
+  font-weight: 600;
+}
+
+/* ------------------------------------------------------------
+   SUPER-ADAPTIVE BREAKPOINTS
+------------------------------------------------------------ */
+@media (max-width: 900px) {
+  .main-nav {
+    display: none;
+  }
+  .layout-header__cta {
+    display: none;
+  }
+  .burger {
+    display: flex;
+  }
+}
+
+
+/* SOCIAL BAR --------------------------------------------------------------- */
+
+.social-bar {
+  position: fixed;
+  top: calc(var(--header-height) + 120px);
+  left: 120px;
+  width: 50px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 18px;
+  z-index: 9998;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.social-bar.hidden {
+  opacity: 0;
+  pointer-events: none;
+  transform: translateX(-10px);
+}
+
+.social-bar__label {
+  writing-mode: vertical-rl;
+  font-size: 12px;
+  opacity: 0.8;
+  color: #777;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.social-link {
+  position: relative;
+  font-size: 12px;
+  color: #777;
+  cursor: pointer;
+  height: 16px;
+  display: inline-flex;
+  align-items: center;
+}
+
+.social-link__short {
+  transition: 0.25s ease;
+}
+
+.social-link__full {
+  position: absolute;
+  left: 0;
+  opacity: 0;
+  white-space: nowrap;
+  transition: 0.25s ease;
+}
+
+.social-link:hover .social-link__short {
+  opacity: 0;
+}
+.social-link:hover .social-link__full {
+  opacity: 1;
+  color: var(--color-accent);
+}
+
+/* ============================================================
+   HERO — полностью динамический, fluid, без media-queries
+   ============================================================ */
+.hero {
+    min-height: calc(100dvh - var(--header-height) - 3vh);
+
+    padding-top: calc(var(--header-height) + clamp(20px, 5vw, 60px));
+    padding-bottom: clamp(40px, 8vw, 120px);
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+
+    /* Поддержка параллакса и слоёв */
+    position: relative;
+    overflow: hidden;
+}
+
+
+
+/* ============================================================
+   BACKGROUND IMAGE — отдельный слой с лёгким размытием
+   ============================================================ */
+.hero::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+
+    background-image: url('../images/background_3.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+
+    filter: blur(4px);        /* ← Лёгкое размытие */
+    transform: scale(1.06);   /* Чтобы не было обрезаний по краям */
+
+    z-index: -1; /* ← Слой под всеми */
+}
+
+
+
+/* ============================================================
+   ::before — глобальное затемнение + премиальные градиенты
+   ============================================================ */
+.hero::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+
+    background: linear-gradient(
+        rgba(0,0,0,0.70) 0%,
+        rgba(0,0,0,0.40) 35%,
+        rgba(0,0,0,0.55) 100%
+    );
+
+    z-index: 0;
+    pointer-events: none;
+}
+
+
+
+/* ============================================================
+   LAYER 1 — Размытый фон (::after)
+   ============================================================ */
+.hero::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+
+    background-image: url('../images/background_3.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+
+    filter: blur(0.5px);
+    transform: scale(1.06); /* убрать края после blur */
+
+    z-index: -1; /* самый нижний слой */
+}
+
+
+
+/* ============================================================
+   LAYER 2 — затемнение + виньетка + шум (::before)
+   ============================================================ */
+.hero::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+
+    background:
+        /* Виньетка */
+        radial-gradient(
+            circle at center,
+            rgba(0,0,0,0) 40%,
+            rgba(0,0,0,0.55) 100%
+        ),
+        /* Темный вертикальный градиент */
+        linear-gradient(
+            rgba(0,0,0,0.70) 0%,
+            rgba(0,0,0,0.40) 35%,
+            rgba(0,0,0,0.55) 100%
+        ),
+        /* Шум */
+        url('../images/noise.png');
+
+    opacity: 0.22;
+    mix-blend-mode: overlay;
+
+    z-index: 0;
+    pointer-events: none;
+}
+
+
+
+/* ============================================================
+   HERO CONTENT — центральная адаптивная колонна
+   ============================================================ */
+.hero__container {
+    position: relative;
+    z-index: 3;
+
+    max-width: clamp(500px, 70vw, 900px);
+    width: 100%;
+    margin-inline: auto;
+    padding-inline: clamp(8px, 4vw, 24px);
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    gap: clamp(28px, 6vw, 72px);
+
+    opacity: 0;
+    transform: translateY(40px);
+    animation: heroFadeIn 1.2s ease-out forwards;
+}
+
+
+
+/* ============================================================
+   Заголовок HERO
+   ============================================================ */
+.hero__title {
+    font-size: clamp(28px, 5vw, 64px);
+    font-weight: 700;
+    line-height: 1.1;
+}
+
+
+
+/* ============================================================
+   Блок CTA
+   ============================================================ */
+.hero__actions {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: clamp(16px, 4vw, 32px);
+}
+
+
+
+/* Размер элементов */
+.hero__actions > * {
+    height: clamp(48px, 9vw, 70px);
+    padding-inline: clamp(24px, 6vw, 40px);
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+
+/* Кнопка */
+.hero__button {
+    font-size: clamp(16px, 2.2vw, 20px);
+    border-radius: 0 !important;
+}
+
+
+/* Кнопка "Контакты" */
+#contacts-btn {
+    border-radius: 0 !important;
+}
+
+
+
+/* Цена */
+.hero__price {
+    font-size: clamp(28px, 3vw, 42px);
+    font-weight: 600;
+    color: var(--color-accent);
+
+    text-shadow:
+        0 3px 8px rgba(0,0,0,0.45),
+        0 1px 2px rgba(0,0,0,0.25);
+}
+
+
+
+/* Анимация появления */
+@keyframes heroFadeIn {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* TICKER ------------------------------------------------------------------- */
+
+.ticker {
+    height: 34px;
+    overflow: hidden;
+    background: rgba(255,255,255,0.92);
+    backdrop-filter: blur(4px);
+    border-top: 1px solid rgba(0,0,0,0.08);
+    border-bottom: 1px solid rgba(0,0,0,0.08);
+    display: flex;
+    align-items: center;
+}
+
+.ticker__track {
+    display: flex;
+    flex-wrap: nowrap;
+    animation: ticker-move 26s linear infinite;
+}
+
+.ticker__group {
+    display: flex;
+    flex-shrink: 0;
+}
+
+.ticker__item {
+    display: flex;
+    align-items: center;
+    gap: 30px;
+    padding: 0 20px;
+
+    white-space: nowrap;
+    font-size: 15px;
+    font-weight: 500;
+    color: #000;
+}
+
+.ticker__logo {
+    height: 24px;
+    opacity: 0.9;
+    filter: brightness(0) contrast(1.2);
+}
+
+@keyframes ticker-move {
+    0%   { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+}
+
+
+
+/* ============================================================
+   MATS — SUPER FLUID + MOBILE LEFT IMAGE LAYOUT
+============================================================ */
+
+.mats {
+    background: #111;
+    padding-block: clamp(24px, 6vw, 70px);
+}
+
+/* Внутренняя вертикальная структура */
+.mats__inner {
+    display: flex;
+    flex-direction: column;
+    gap: clamp(20px, 5vw, 48px);
+}
+
+.mats__heading {
+    text-align: center;
+}
+
+.mat-card__media {
+    overflow: hidden;
+    border-radius: 18px;
+}
+
+.mat-card__image {
+    width: 100%;
+    display: block;
+    transition: transform 0.35s ease, opacity 0.25s ease;
+    transform-origin: center center;
+}
+
+.mat-card__image.hovered {
+    transform: scale(1.08); /* увеличение */
+}
+
+/* ------------------------------------------------------------
+   DESKTOP GRID (auto-fit, fluid)
+------------------------------------------------------------ */
+
+.mats__grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: clamp(20px, 3vw, 40px);
+    justify-items: center;
+}
+
+/* ------------------------------------------------------------
+   CARD BASE
+------------------------------------------------------------ */
+
+.mat-card {
+    width: 100%;
+    max-width: 280px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+/* MEDIA — картинка */
+.mat-card__media {
+    position: relative;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 6px 16px rgba(0,0,0,0.25);
+    aspect-ratio: 1 / 1; /* фиксированные пропорции = НЕ растягивается */
+    transition: 0.3s ease;
+}
+
+.mat-card__media:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 26px rgba(0,0,0,0.35);
+}
+
+.mat-card__image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.mat-card__expand {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.9);
+    color: #000;
+    font-size: 20px;
+    font-weight: 700;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: 0.25s ease;
+}
+
+.mat-card__expand:hover {
+    background: var(--color-accent);
+    color: #fff;
+}
+
+/* BODY */
+.mat-card__body {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.mat-card__title {
+    font-size: 20px;
+    font-weight: 700;
+}
+
+.mat-card__type {
+    font-size: 12px;
+    text-transform: uppercase;
+    color: #bfbfbf;
+    letter-spacing: 0.06em;
+}
+
+.mat-card__list {
+    font-size: 14px;
+    color: var(--color-text-soft);
+}
+
+
+/* ============================================================
+   MOBILE MODE (<= 700px)
+   — картинка слева
+   — текст справа
+   — товары друг под другом
+============================================================ */
+
+@media (max-width: 700px) {
+
+    .mats__grid {
+        grid-template-columns: 1fr; /* одна колонка */
+        gap: 28px;
+    }
+
+    .mat-card {
+        flex-direction: row;
+        max-width: 100%;
+        gap: 16px;
+        align-items: flex-start;
+    }
+
+    /* картинка слева */
+    .mat-card__media {
+        width: 40%;
+        min-width: 130px;
+        aspect-ratio: 1 / 1;
+        border-radius: 10px;
+    }
+
+    .mat-card__image {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    /* текст справа */
+    .mat-card__body {
+        flex: 1;
+        gap: 6px;
+        padding-top: 4px;
+    }
+
+    .mat-card__title {
+        font-size: 18px;
+    }
+
+    .mat-card__list {
+        font-size: 14px;
+        line-height: 1.3;
+    }
+
+    .mat-card__expand {
+        width: 26px;
+        height: 26px;
+        font-size: 16px;
+    }
+}
+
+
+/* ============================================================
+   GALLERY — DESKTOP 3 CARDS / MOBILE 1 CARD SLIDER
+============================================================ */
+
+.gallery {
+  background: #111;
+  padding-block: clamp(24px, 4vw, 48px);
+}
+
+.gallery-slider {
+  max-width: 1100px;
+  margin-inline: auto;
+  overflow: hidden;
+  position: relative;
+}
+
+/* скрытые переключатели */
+.gallery-slider__control {
+  display: none;
+}
+
+/* Лента */
+.gallery-slider__inner {
+  display: flex;
+  width: 200%;
+  transition: transform 0.4s ease;
+}
+
+/* -----------------------------------------------------------
+   DESKTOP — 3 карточки на слайде
+------------------------------------------------------------ */
+.gallery-slider__slide {
+  width: 50%;
+  display: flex;
+  justify-content: center;
+  gap: 32px;
+}
+
+.gallery-slider__item {
+  width: clamp(220px, 30%, 320px);
+  aspect-ratio: 1/1;
+  background: #333;
+  border-radius: 12px;
+  box-shadow: 0 8px 22px rgba(0,0,0,0.35);
+  transition: 0.25s ease;
+}
+
+.gallery-slider__item:hover {
+  transform: translateY(-4px);
+}
+
+/* Точки */
+.gallery-slider__dots {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  margin-top: 20px;
+}
+
+.gallery-slider__dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: #555;
+  cursor: pointer;
+  transition: 0.25s ease;
+}
+
+.gallery-slider__dot:hover {
+  transform: scale(1.25);
+}
+
+/* Активные точки */
+#gal-1:checked ~ .gallery-slider__inner { transform: translateX(0); }
+#gal-2:checked ~ .gallery-slider__inner { transform: translateX(-50%); }
+
+#gal-1:checked ~ .gallery-slider__dots .gallery-slider__dot:nth-child(1),
+#gal-2:checked ~ .gallery-slider__dots .gallery-slider__dot:nth-child(2) {
+  background: var(--color-accent);
+}
+
+/* ============================================================
+   MOBILE ≤ 768px — 1 КАРТИНКА, ГОРИЗОНТАЛЬНЫЙ SCROLL
+   (лучшие практики)
+============================================================ */
+@media (max-width: 768px) {
+
+  /* Галерея становится скроллируемой */
+  .gallery-slider {
+    overflow-x: auto;
+    overflow-y: hidden;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  /* Лента — одна строка без трансформаций */
+  .gallery-slider__inner {
+    display: flex;
+    width: auto;
+    transform: none !important;
+    gap: 16px;
+  }
+
+  /* Отключаем “страницы” */
+  .gallery-slider__slide {
+    width: auto !important;
+    flex-direction: row !important;
+    flex-wrap: nowrap !important;
+    gap: 16px;
+    display: contents;
+  }
+
+  /* Каждая карточка = 1 экран */
+  .gallery-slider__item {
+    flex: 0 0 85%;
+    min-width: 85%;
+    max-width: 85%;
+    aspect-ratio: 1 / 1;
+    scroll-snap-align: center;
+
+    border-radius: 12px;
+    box-shadow: 0 8px 22px rgba(0,0,0,0.35);
+  }
+
+  /* Прячем точки */
+  .gallery-slider__dots {
+    display: none !important;
+  }
+
+  /* Прячем radio-кнопки */
+  .gallery-slider__control {
+    display: none !important;
+  }
+}
+
+/* ============================================================
+   CUSTOM SCROLLBAR — прозрачный трек + красный ползунок
+============================================================ */
+
+/* Firefox */
+.gallery-slider {
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-accent) transparent;
+}
+
+/* Chrome / Edge / Safari */
+.gallery-slider::-webkit-scrollbar {
+  height: 10px;
+  background: transparent;
+}
+
+.gallery-slider::-webkit-scrollbar-track {
+  background: transparent !important;
+}
+
+.gallery-slider::-webkit-scrollbar-thumb {
+  background: var(--color-accent);
+  border-radius: 2px;
+  transition: background 0.25s ease;
+}
+
+.gallery-slider::-webkit-scrollbar-thumb:hover {
+  background: var(--color-accent-hover);
+}
+
+
+
+/* BENEFITS ----------------------------------------------------------------- */
+
+.benefits {
+  background: #111;
+  padding-bottom: clamp(26px, 8vw, 94px);
+}
+
+.benefits__inner {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xl);
+}
+
+.benefits__heading {
+  text-align: center;
+}
+
+.benefits__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 32px;
+}
+
+.benefit-card {
+  text-align: center;
+}
+
+.benefit-card__icon {
+  width: 90px;
+  height: 90px;
+  margin-inline: auto;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.benefit-card__icon img {
+  height: 80px;
+  object-fit: contain;
+  filter: brightness(0) saturate(100%) invert(28%) sepia(98%) saturate(7496%) hue-rotate(358deg) brightness(98%) contrast(109%);
+}
+
+.benefit-card__title {
+  margin-top: 16px;
+  font-size: 20px;
+  font-weight: 700;
+}
+
+.benefit-card__text {
+  margin-top: 10px;
+  font-size: 15px;
+  color: #ddd;
+}
+
+/* CALCULATOR --------------------------------------------------------------- */
+
+.calculator {
+  background: #161616;
+}
+
+.calculator__panel {
+  max-width: 900px;
+  margin-inline: auto;
+  background: var(--color-surface);
+  border-radius: 26px;
+  border: 1px solid rgba(255,255,255,0.1);
+  padding: 40px 32px;
+  box-shadow: 0 0 40px rgba(0,0,0,0.45);
+}
+
+.calculator__header {
+  text-align: center;
+  margin-bottom: 32px;
+}
+
+.calculator__title {
+  font-size: 28px;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  margin-bottom: 8px;
+}
+
+.calculator__subtitle {
+  color: #ccc;
+  font-size: 15px;
+}
+
+.calculator__form {
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+}
+
+.calculator__row {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.calculator__field {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.calculator__label {
+  font-size: 14px;
+  color: #bbb;
+  margin-bottom: 6px;
+}
+
+.calculator__control {
+  padding: 12px 14px;
+  border-radius: 12px;
+  background: #121212;
+  color: #fff;
+  border: 1px solid #333;
+  font-size: 15px;
+  transition: 0.25s ease;
+}
+
+.calculator__control:focus {
+  outline: none;
+  border-color: var(--color-accent);
+}
+
+/* FOOTER ------------------------------------------------------------------- */
+
+.layout-footer {
+  background: #0f0f0f;
+  color: #fff;
+  padding: 60px 0 30px;
+  font-size: 15px;
+}
+
+.layout-footer__inner {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px,1fr));
+  gap: 32px;
+}
+
+.layout-footer__title {
+  font-size: 18px;
+  font-weight: 700;
+  margin-bottom: 12px;
+}
+
+.layout-footer__muted {
+  font-size: 14px;
+  color: #bbb;
+}
+
+.layout-footer__list li + li {
+  margin-top: 6px;
+}
+
+.layout-footer__list a {
+  color: #ccc;
+  transition: 0.2s;
+}
+
+.layout-footer__list a:hover {
+  color: #fff;
+}
+
+.layout-footer__socials a {
+  margin-right: 12px;
+  font-weight: 600;
+}
+
+.layout-footer__socials a:hover {
+  color: #ff4343;
+}
+
+.layout-footer__bottom {
+  margin-top: 30px;
+  padding-top: 18px;
+  text-align: center;
+  border-top: 1px solid #222;
+  font-size: 14px;
+  color: #777;
+}
+
+/* =========================================================
+   PRODUCT SHEET (MODAL)
+========================================================= */
+
+.product-sheet {
+  position: fixed;
+  inset: 0;
+  z-index: 20000;
+  pointer-events: none;
+}
+
+.product-sheet__overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0,0,0,0.45);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.product-sheet__panel {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -100%;
+  height: 75vh;
+  background: #fff;
+  border-radius: 24px 24px 0 0;
+  box-shadow: 0 -20px 40px rgba(0,0,0,0.45);
+  padding: 24px 32px;
+  transition: bottom 0.4s ease;
+  display: flex;
+  flex-direction: column;
+
+  /* === FIX: главный вертикальный скролл === */
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+.product-sheet__close {
+  position: absolute;
+  right: 24px;
+  top: 16px;
+  font-size: 28px;
+  color: #000;
+}
+
+.product-sheet__layout {
+  margin-top: 24px;
+  display: grid;
+  grid-template-columns: 1fr 1.2fr 1fr;
+  gap: 32px;
+  height: auto;
+}
+
+.product-sheet__col,
+.product-sheet__col--details {
+  /* === FIX: убираем внутренние скроллы === */
+  overflow: visible !important;
+}
+
+.product-sheet__col--form {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.product-sheet__label {
+  font-size: 12px;
+  text-transform: uppercase;
+  color: #888;
+  letter-spacing: 0.12em;
+  margin-bottom: 4px;
+}
+
+.product-sheet__title {
+  font-size: 24px;
+  font-weight: 700;
+  margin-bottom: 10px;
+  color: #000;
+}
+
+.product-sheet__image {
+  border-radius: 16px;
+}
+
+/* CONTENT BLOCKS -------------------------------------- */
+
+.product-sheet__block + .product-sheet__block {
+  margin-top: 20px;
+}
+
+.product-sheet__block-title {
+  font-size: 16px;
+  font-weight: 600;
+  margin-bottom: 10px;
+  color: #111;
+}
+
+.product-sheet__list {
+  font-size: 14px;
+  color: #555;
+}
+
+.product-sheet__list li + li {
+  margin-top: 6px;
+}
+
+/* SIZE SELECTOR ---------------------------------------- */
+
+.size-selector {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px 12px;
+  margin-top: 10px;
+}
+
+/* Кнопки размеров */
+.size-selector__button {
+  padding: 8px 12px;
+  border-radius: 50px;
+  border: 1px solid #d1d1d1;
+  background: #fafafa;
+  font-size: 14px;
+  text-align: center;
+  transition: 0.25s ease;
+}
+
+/* Кнопка "Индивидуально" */
+.size-selector__button--outline {
+  background: transparent;
+  height: 44px;                     /* фиксированная высота */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 100%;                  /* чтобы ширина не прыгала */
+}
+
+.size-selector__button:hover {
+  border-color: var(--color-accent);
+  color: var(--color-accent);
+}
+
+.size-selector__button.active {
+  background: var(--color-accent);
+  color: #fff;
+  border-color: var(--color-accent);
+}
+
+/* Поля Ш × Д — строго В ОДНОЙ СТРОКЕ */
+.size-selector__custom {
+  display: none;                    /* по умолчанию скрыт */
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 10px;                        /* расстояние между элементами */
+  margin-top: 14px;
+}
+
+.size-selector__row {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 10px;
+}
+
+/* Поля Ш и Д */
+.size-selector__input {
+  width: 70px;
+  min-width: 70px;                  /* фиксируем, чтобы не схлопывались */
+  padding: 8px 10px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  font-size: 14px;
+  text-align: center;
+}
+
+/* Знак × */
+.size-selector__divider {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  font-weight: 700;
+  color: #000;
+  width: 20px;                      /* фиксированная ширина */
+  line-height: 1;
+}
+
+/* Кнопка OK */
+.size-selector__ok {
+  padding: 8px 14px;
+  height: 40px;
+  min-width: 55px;                   /* чтобы OK не расползался */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  background: var(--color-accent);
+  color: #fff;
+  font-size: 13px;
+  white-space: nowrap;               /* текст не переносится */
+}
+
+
+/* PRICE CARD ------------------------------------------ */
+
+.product-sheet__price-card {
+  background: #111;
+  border-radius: 18px;
+  padding: 16px 18px;
+  color: #fff;
+}
+
+.product-sheet__price-label {
+  font-size: 12px;
+  opacity: 0.8;
+}
+
+.product-sheet__price-value {
+  margin-top: 4px;
+  font-size: 18px;
+  font-weight: 800;
+  color: var(--color-accent);
+}
+
+.product-sheet__price-note {
+  margin-top: 6px;
+  font-size: 12px;
+  color: #ccc;
+}
+
+/* FORM ----------------------------------------------- */
+
+.product-sheet__form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.product-sheet__field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 14px;
+  color: #333;
+}
+
+.product-sheet__input {
+  padding: 10px 12px;
+  border-radius: 10px;
+  border: 1px solid #ccc;
+  font-size: 14px;
+}
+
+.product-sheet__input:focus {
+  outline: none;
+  border-color: var(--color-accent);
+}
+
+/* OPENED STATE ---------------------------------------- */
+
+.product-sheet--open {
+  pointer-events: auto;
+}
+
+.product-sheet--open .product-sheet__overlay {
+  opacity: 1;
+}
+
+.product-sheet--open .product-sheet__panel {
+  bottom: 0;
+}
+/* =========================================================
+   PRODUCT SHEET — CUSTOM SCROLLBAR (как в галерее)
+========================================================= */
+
+.product-sheet__panel::-webkit-scrollbar {
+  width: 10px;
+}
+
+.product-sheet__panel::-webkit-scrollbar-track {
+  background: transparent;
+
+.product-sheet__panel::-webkit-scrollbar-thumb {
+  background: var(--color-bg-alt);
+  border-radius: 1px;
+}
+
+.product-sheet__panel::-webkit-scrollbar-thumb:hover {
+  background: var(--color-accent-hover);
+
+/* Firefox */
+.product-sheet__panel {
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-accent) transparent;
+}
+
+
+/* RESPONSIVE ----------------------------------------------------------------*/
+
+/* Tablets and up */
+@media (min-width: 768px) {
+  .calculator__row {
+    flex-direction: row;
+  }
+}
+
+/* Small screens */
+@media (max-width: 1024px) {
+  .main-nav {
+    display: none;
+  }
+  .layout-header__cta {
+    display: none;
+  }
+  .burger {
+    display: flex;
+  }
+  .social-bar {
+    display: none;
+  }
+}
+
+/* Phones */
+@media (max-width: 600px) {
+
+  .hero__cta {
+    width: 100%;
+    height: 60px;
+    padding-inline: 24px;
+  }
+
+  .hero__price {
+    width: 100%;
+    padding: 14px 20px;
+    font-size: 18px;
+  }
+
+  .calculator__panel {
+    padding-inline: 20px;
+  }
+
+  /* МОДАЛКА — исправлено */
+  .product-sheet__panel {
+    border-radius: 0;
+    max-height: 100vh;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .product-sheet__layout {
+    grid-template-columns: 1fr;
+    gap: 20px;
+    overflow-y: visible;              /* layout НЕ должен прокручиваться */
+  }
+}
+
