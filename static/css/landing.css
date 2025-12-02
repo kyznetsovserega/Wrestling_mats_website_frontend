@@ -1140,6 +1140,62 @@ body.scrolled .layout-header {
   border-radius: 16px;
 }
 
+
+/* =========================================================
+   SLICE PREVIEW BUTTON
+========================================================= */
+
+.product-sheet__image-wrapper {
+    position: relative;
+}
+
+.slice-toggle {
+    position: absolute;
+    bottom: 14px;
+    right: 14px;
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+    background: #E60012;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 0 12px rgba(0,0,0,0.4);
+    transition: transform 0.2s ease;
+}
+
+.slice-toggle:hover {
+    transform: scale(1.07);
+}
+
+/* SLICE overlay */
+
+.slice-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(0,0,0,0.65);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+    border-radius: 14px;
+}
+
+.slice-overlay.active {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.slice-overlay__img {
+    max-width: 85%;
+    max-height: 85%;
+    object-fit: contain;
+}
+
 /* CONTENT BLOCKS -------------------------------------- */
 
 .product-sheet__block + .product-sheet__block {

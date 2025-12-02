@@ -470,13 +470,31 @@
                 <div class="product-sheet__col product-sheet__col--media">
                     <div class="product-sheet__label">Тип ковра</div>
                     <h2 class="product-sheet__title js-sheet-title"></h2>
-                    <img class="product-sheet__image js-sheet-image" src="" alt="Ковер">
+
+                    <!-- ВАЖНО: wrapper ДОЛЖЕН быть внутри этой колонки -->
+                    <div class="product-sheet__image-wrapper">
+
+                        <!-- Основное изображение -->
+                        <img class="product-sheet__image js-sheet-image" src="" alt="Ковер">
+
+                        <!-- Slice Overlay -->
+                        <div class="slice-overlay">
+                            <img class="slice-overlay__img js-slice-img" src="" alt="">
+                        </div>
+
+                        <!-- Кнопка Slice -->
+                        <button class="slice-toggle" type="button">
+                            <img class="slice-toggle__img" src="" alt="">
+                        </button>
+
+                    </div>
                 </div>
+
 
                 <!-- Col 2 -->
                 <div class="product-sheet__col product-sheet__col--details">
                     <div class="product-sheet__block">
-                        <h3 class="product-sheet__block-title">Комплектация и конструкция ковра</h3>
+                        <h3 class="product-sheet__block-title">Комплектация</h3>
                         <ul class="product-sheet__list js-sheet-specs"></ul>
                     </div>
 
