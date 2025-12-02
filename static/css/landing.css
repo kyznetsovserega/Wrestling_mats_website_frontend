@@ -128,7 +128,7 @@ body.scrolled .layout-header {
 .burger__icon {
   font-size: clamp(26px, 7vw, 40px);
   line-height: 1;
-  color: #000;
+  color: #ff4444;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -282,7 +282,7 @@ body.scrolled .layout-header {
 
 
 /* ============================================================
-   BACKGROUND IMAGE — отдельный слой с лёгким размытием
+   HERO BACKGROUND — один слой + адаптация под мобильный портрет
    ============================================================ */
 .hero::after {
     content: "";
@@ -294,10 +294,20 @@ body.scrolled .layout-header {
     background-position: center;
     background-repeat: no-repeat;
 
-    filter: blur(4px);        /* ← Лёгкое размытие */
-    transform: scale(1.06);   /* Чтобы не было обрезаний по краям */
+    filter: blur(4px);
+    transform: scale(1.06); /* базовое увеличение для всех экранов */
+    transform-origin: center center;
 
-    z-index: -1; /* ← Слой под всеми */
+    z-index: -1;
+}
+
+/* ============================================================
+   MOBILE PORTRAIT — поворот фона на 90° + компенсация масштаба
+   ============================================================ */
+@media (max-width: 600px) and (orientation: portrait) {
+    .hero::after {
+        transform: rotate(90deg) scale(1.35);  /* поворот + увеличение */
+    }
 }
 
 
