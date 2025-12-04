@@ -259,9 +259,179 @@
                         </div>
                     </article>
 
+                    <!-- Card 4 — КЛАССИК -->
+                    <article class="mat-card"
+                             data-title="КЛАССИК"
+                             data-img="static/images/mat_pvv.png"
+                             data-type="ПВВ"
+                             data-density="от 120 до 240 кг/м3"
+                             data-life="более 10 лет"
+                             data-recommend="Для любителей и профессионалов">
+
+                        <div class="mat-card__media">
+                            <img class="mat-card__image"
+                                 src="static/images/mat_pvv.png"
+                                 data-default="static/images/mat_pvv.png"
+                                 data-hover="static/images/slice_pvv.png"
+                                 alt="Ковер КЛАССИК">
+
+                            <button class="mat-card__expand" type="button"
+                                    aria-label="Подробнее о ковре КЛАССИК">+</button>
+                        </div>
+
+                        <div class="mat-card__body">
+                            <h3 class="mat-card__title">КЛАССИК</h3>
+                            <div class="mat-card__type">ПВВ</div>
+                            <ul class="mat-card__list">
+                                <li>Плотность — <b>от 120 до 240 кг/м3</b></li>
+                                <li>Срок службы — <b>более 10 лет</b></li>
+                                <li>Для любителей и профессионалов</li>
+                            </ul>
+                        </div>
+                    </article>
+
                 </div>
             </div>
         </section>
+
+        <!-- =====================================================
+                СПОСОБ КРЕПЛЕНИЯ
+        ====================================================== -->
+        <section class="fasteners" id="fasteners">
+
+          <!-- Свернутое состояние (кликабельная шапка) -->
+          <button class="fasteners__header" type="button">
+            <div class="fasteners__header-inner">
+              <div class="fasteners__header-text">
+                <span class="fasteners__toggle" aria-hidden="true"></span>
+                <h2 class="fasteners__title">Способ крепления</h2>
+                <p class="fasteners__subtitle">
+                  Карманы, люверсы или липучки — подберём крепление под ваш зал
+                </p>
+              </div>
+
+            </div>
+          </button>
+
+          <!-- Разворачиваемая часть -->
+          <div class="fasteners__content">
+            <div class="fasteners__inner">
+
+              <div class="fasteners__layout">
+
+                <div class="fasteners__scheme">
+
+                  <div class="fasteners__scheme-base">
+
+                    <!-- НЕОНОВАЯ СХЕМА -->
+                    <img src="/static/images/fixing_method/mats_neon.png"
+                         class="fasteners__scheme-image"
+                         alt="Схема крепления ковра">
+
+                    <!-- ГЛАВНОЕ БОЛЬШОЕ КРУГЛОЕ ИЗОБРАЖЕНИЕ -->
+                    <div class="fasteners__circle-image">
+                      <img src="/static/images/fixing_method/fixing_method_pockets.png" data-method-panel="pockets">
+                      <img src="/static/images/fixing_method/fixing_method_velcro.png" data-method-panel="velcro">
+                      <img src="/static/images/fixing_method/fixing_method_eyelets.png" data-method-panel="eyelets">
+                      <div class="fasteners__circle-label"></div>
+                    </div>
+
+                    <!-- КНОПКИ НА СХЕМЕ (как в PDF) -->
+                    <button class="fasteners__hotspot fasteners__hotspot--pockets" data-method="pockets">
+                      Карманы
+                    </button>
+
+                    <button class="fasteners__hotspot fasteners__hotspot--velcro" data-method="velcro">
+                      Липучки
+                    </button>
+
+                    <button class="fasteners__hotspot fasteners__hotspot--eyelets" data-method="eyelets">
+                      Люверсы
+                    </button>
+
+                    <!-- Три круглые точки под схемой -->
+                    <button class="fasteners__dot" data-method="velcro"></button>
+                    <button class="fasteners__dot" data-method="pockets"></button>
+                    <button class="fasteners__dot" data-method="eyelets"></button>
+
+                  </div>
+                </div>
+
+
+
+                <!-- ПРАВАЯ ЧАСТЬ — табы + текст -->
+                <div class="fasteners__info">
+
+                  <!-- Табы -->
+                  <div class="fasteners__tabs">
+                    <button class="fasteners__tab" type="button" data-method="overview">
+                      Обзор
+                    </button>
+                    <button class="fasteners__tab" type="button" data-method="velcro">
+                      Липучки
+                    </button>
+                    <button class="fasteners__tab" type="button" data-method="eyelets">
+                      Люверсы
+                    </button>
+                    <button class="fasteners__tab" type="button" data-method="pockets">
+                      Карманы
+                    </button>
+                  </div>
+
+                  <!-- Панели контента -->
+                  <div class="fasteners__panels">
+
+                    <div class="fasteners__panel" data-method-panel="overview">
+                      <h3 class="fasteners__panel-title"></h3>
+                      <p class="fasteners__panel-text">
+                        Для фиксации борцовских покрытий используются три типа
+                        крепления: <strong>карманы</strong>, <strong>люверсы</strong> и <strong>липучка (Velcro)</strong>.<br><br>
+                        Каждая система обеспечивает надежную фиксацию покрытия,
+                        но отличается по скорости монтажа, степени натяжения и стоимости.<br><br>
+                        Выбор зависит от задач зала, требуемой мобильности покрытия
+                        и типа тренировочного процесса.
+                      </p>
+                    </div>
+
+                    <div class="fasteners__panel" data-method-panel="velcro">
+                      <h3 class="fasteners__panel-title">Липучки (Velcro)</h3>
+                      <p class="fasteners__panel-text">
+                        Контактная лента пришивается по периметру покрытия, а ответная часть — на маты.<br>
+                        Обеспечивает быстрый монтаж без инструмента и идеально подходит, когда ковер
+                        требуется часто снимать и устанавливать без сверления пола.
+                      </p>
+                    </div>
+
+                    <div class="fasteners__panel" data-method-panel="eyelets">
+                      <h3 class="fasteners__panel-title">Люверсы</h3>
+                        <p class="fasteners__panel-text">
+                            По периметру ковра устанавливаются металлические люверсы.<br> Через них покрытие
+                            фиксируется тросами, рейками или крепежными элементами, обеспечивая
+                            максимальное натяжение и абсолютную стабильность.
+                        </p>
+                    </div>
+
+                    <div class="fasteners__panel" data-method-panel="pockets">
+                      <h3 class="fasteners__panel-title">Карманы</h3>
+                        <p class="fasteners__panel-text">
+                          Крайние маты вставляются в специальные «карманы» покрытия, создавая натяжение
+                          без дополнительного крепежа.<br>Монтаж занимает 2–3 минуты — идеальное решение
+                          для мобильных залов и арен, где нельзя жестко фиксировать ковер к полу.
+                        </p>
+                    </div>
+
+                  </div>
+                </div>
+
+              </div>
+
+            </div>
+          </div>
+          <div class="fasteners-line"></div>
+        </section>
+
+
+
 
 
         <!-- =====================================================
@@ -391,6 +561,16 @@
                                     <option>40 мм</option>
                                     <option>50 мм</option>
                                     <option>60 мм</option>
+                                </select>
+                            </div>
+
+                            <div class="calculator__field">
+                                <label class="calculator__label">Способ крепления</label>
+                                <select class="calculator__control" required>
+                                    <option value="">Выберите…</option>
+                                    <option>Люверсы</option>
+                                    <option>Липучки</option>
+                                    <option>Карман</option>
                                 </select>
                             </div>
 
@@ -534,6 +714,15 @@
                                 <button class="size-selector__ok js-size-ok" type="button">OK</button>
                             </div>
 
+                        </div>
+                        <div class="calculator__field">
+                            <label class="calculator__label " >Способ крепления</label>
+                            <select class="calculator__control" required>
+                                <option value="">Выберите…</option>
+                                <option>Люверсы</option>
+                                <option>Липучки</option>
+                                <option>Карман</option>
+                            </select>
                         </div>
                     </div>
 

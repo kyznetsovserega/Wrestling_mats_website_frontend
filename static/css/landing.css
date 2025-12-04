@@ -637,6 +637,19 @@ body.scrolled .layout-header {
     color: var(--color-text-soft);
 }
 
+/* ============================================================
+   DESKTOP GRID FOR 1440
+============================================================ */
+@media (min-width: 800px) and (max-width: 1439px) {
+    .mats__grid {
+        grid-template-columns: repeat(4, 1fr); /* фиксируем 4 карточки */
+        gap: clamp(20px, 2vw, 32px);
+    }
+
+    .mat-card {
+        max-width: none; /* убрать ограничение 280px, чтобы вписывались */
+    }
+}
 
 /* ============================================================
    MOBILE MODE (<= 700px)
@@ -695,6 +708,361 @@ body.scrolled .layout-header {
         font-size: 16px;
     }
 }
+
+
+
+
+
+
+
+
+/* ============================================================================
+   FASTENERS — общий контейнер
+============================================================================ */
+.fasteners {
+  background: #111;
+  color: #fff;
+}
+
+/* ============================================================================
+   СВЕРНУТАЯ ШАПКА
+============================================================================ */
+.fasteners__header {
+  width: 100%;
+  border: none;
+  background: #1a1a1a;
+  padding: 24px 0;
+  cursor: pointer;
+}
+
+.fasteners__header-inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+}
+
+.fasteners__title {
+  margin: 10px;
+  font-size: 26px;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: #e60012;
+}
+
+.fasteners__subtitle {
+  margin: 0;
+  font-size: 14px;
+  color: #ccc;
+}
+
+.fasteners__toggle {
+  width: 18px;
+  height: 18px;
+  border-right: 2px solid rgba(255,255,255,0.85);
+  border-bottom: 2px solid rgba(255,255,255,0.85);
+  transform: rotate(45deg); /* ▼ вниз */
+  transition: transform .25s ease, opacity .25s ease;
+  margin-top: 10px;
+
+  animation: bounce 1.8s infinite ease-in-out;
+  display: inline-block;
+}
+
+.fasteners--open .fasteners__toggle {
+  transform: rotate(-135deg);
+  animation: none;
+}
+
+@keyframes bounce {
+  0%, 100% {
+    transform: translateY(0) rotate(45deg);
+  }
+  50% {
+    transform: translateY(5px) rotate(45deg);
+  }
+}
+
+
+/* ============================================================================
+   РАЗВОРАЧИВАЕМАЯ ОБЛАСТЬ
+============================================================================ */
+.fasteners__content {
+  max-height: 0;
+  opacity: 0;
+  overflow: hidden;
+  transition: max-height .35s ease, opacity .3s ease;
+}
+
+.fasteners__content.active {
+  max-height: 3000px;
+  opacity: 1;
+}
+
+.fasteners__inner {
+  width: min(1100px, 88%);
+  margin: 40px auto 120px;
+}
+
+/* ============================================================================
+   ЛЕВЫЙ + ПРАВЫЙ БЛОКИ
+============================================================================ */
+.fasteners__layout {
+  display: grid;
+  grid-template-columns: 0.9fr 1.1fr;
+  gap: clamp(24px, 4vw, 40px);
+  align-items: flex-start;
+}
+
+/* ============================================================================
+   СХЕМА (левый блок)
+============================================================================ */
+.fasteners__scheme {
+  display: flex;
+  justify-content: center;
+}
+
+.fasteners__scheme-base {
+  position: relative;
+
+  /* ← ВАЖНО: ИМЕННО ЭТО УБИВАЕТ ПРОБЛЕМУ 430px */
+  width: 520px !important;
+  max-width: 100%;
+  margin: 0 auto;
+}
+
+/* НЕОН-картинка */
+.fasteners__scheme-image {
+  display: block;
+  width: 100%;
+  border-radius: 18px;
+  transition: opacity .25s ease;
+}
+
+
+/* ============================================================================
+    КРУГ — главное изображение
+============================================================================ */
+.fasteners__circle-image {
+  position: absolute;
+  top: 22%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 55%;
+  aspect-ratio: 1 / 1;
+  border-radius: 50%;
+  border: 8px solid white;
+  display: none;
+  overflow: hidden;
+  z-index: 5; /* поверх neon */
+}
+
+.fasteners__circle-image--active {
+  display: block;
+}
+
+.fasteners__circle-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: none;
+}
+
+.fasteners__circle-image img.circle-active {
+  display: block;
+}
+
+.fasteners__circle-label {
+  position: absolute;
+  bottom: 6%;
+  left: 50%;
+  transform: translateX(-50%);
+  color: white;
+  font-size: 18px;
+  font-weight: 600;
+  letter-spacing: .05em;
+}
+
+/* ============================================================================
+   HOTSPOT-КНОПКИ (внутри схемы)
+============================================================================ */
+.fasteners__hotspot {
+  position: absolute;
+  padding: 6px 14px;
+  font-size: 11px;
+  text-transform: uppercase;
+  color: #fff;
+  cursor: pointer;
+  transition: .25s ease;
+  white-space: nowrap;
+  z-index: 10;
+}
+
+
+/* карманы — справа сверху */
+.fasteners__hotspot--pockets {
+  bottom: 92%;
+  left: 68%;
+}
+
+/* липучки — нижний центр */
+.fasteners__hotspot--velcro {
+  bottom: 6%;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+/* люверсы — справа снизу */
+.fasteners__hotspot--eyelets {
+  bottom: 25%;
+  right: 0%;
+  transform: rotate(90deg);
+}
+
+/* активная */
+.fasteners__hotspot--active {
+  background: #e60012;
+  box-shadow: 0 0 14px #e60012;
+}
+
+/* ============================================================================
+   ПРАВАЯ ЧАСТЬ (табы + текст)
+============================================================================ */
+.fasteners__info {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.fasteners__tabs {
+  display: flex;
+  gap: 18px;
+  flex-wrap: wrap;
+}
+
+.fasteners__tab {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: .14em;
+  color: #777;
+  position: relative;
+}
+
+.fasteners__tab--active {
+  color: #e60012;
+}
+
+.fasteners__tab--active::after {
+  content: "";
+  position: absolute;
+  left: 0; right: 0;
+  bottom: -4px;
+  height: 1px;
+  background: #e60012;
+}
+
+/* панели */
+.fasteners__panel {
+  display: none;
+}
+.fasteners__panel--active {
+  display: block;
+}
+
+.fasteners__panel-title {
+  white-space: nowrap;
+  font-weight: 700;
+  margin-bottom: 10px;
+  font-size: clamp(14px, 4vw, 20px); /* динамический масштаб */
+  line-height: 1.1;
+}
+
+
+.fasteners__panel-text {
+  font-size: 15px;
+  color: #ddd;
+  line-height: 1.55;
+}
+
+/* -- тонкая полоса -- */
+.fasteners-line {
+  left: 0;
+  bottom: 20;
+  width: 100%;
+  height: 5px;
+  background: rgba(255,255,255,0.15);
+  z-index: 10000;
+  pointer-events: none;
+}
+
+
+/* ============================================================================
+   МОБИЛЬНАЯ АДАПТАЦИЯ
+============================================================================ */
+@media (max-width: 768px) {
+
+  .fasteners__inner {
+    margin: 32px auto 80px;
+  }
+
+  .fasteners__layout {
+    grid-template-columns: 1fr;
+  }
+
+  .fasteners__scheme-base {
+    width: 92% !important;
+  }
+
+  .fasteners__circle-image {
+    width: 55%;
+    top: 20%;
+  }
+
+  .fasteners__circle-label {
+    font-size: 16px;
+  }
+
+  .fasteners__hotspot {
+    font-size: 10px;
+    padding: 5px 10px;
+  }
+
+  .fasteners__hotspot--pockets {
+    bottom: 92%;
+    left: 66%;
+  }
+
+  .fasteners__hotspot--velcro {
+    bottom: 7%;
+  }
+
+  .fasteners__hotspot--eyelets {
+    bottom: 30%;
+    left: 83%;
+  }
+
+   .fasteners__tabs {
+    flex-wrap: nowrap;      /* теперь ПОЛНЫЙ запрет переноса */
+    overflow-x: auto;       /* чтобы табы могли прокручиваться */
+    gap: 12px;              /* немного меньше расстояние */
+    padding-bottom: 4px;    /* для красоты */
+  }
+
+  .fasteners__tab {
+    font-size: 13px;        /* компактнее */
+    white-space: nowrap;    /* запрет переноса текста */
+  }
+}
+
+
+
+
+
+
 
 
 /* ============================================================

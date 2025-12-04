@@ -262,3 +262,134 @@ sliceBtn?.addEventListener("click", () => {
 document.getElementById("contacts-btn")?.addEventListener("click", () => {
     window.location.href = "https://prospectboxing.ru/contacts";
 });
+
+
+
+/* ============================================================================
+
+============================================================================ */
+
+document.addEventListener("DOMContentLoaded", () => {
+  const fasteners = document.querySelector(".fasteners");
+  if (!fasteners) return;
+
+  const headerBtn    = fasteners.querySelector(".fasteners__header");
+  const content      = fasteners.querySelector(".fasteners__content");
+
+  const tabs         = fasteners.querySelectorAll(".fasteners__tab");
+  const panels       = fasteners.querySelectorAll(".fasteners__panel");
+
+  const hotspots     = fasteners.querySelectorAll(".fasteners__hotspot"); // старые метки (если нужны)
+  const dots         = fasteners.querySelectorAll(".fasteners__dot");       // НОВЫЕ круглые точки
+
+  const circleBlock  = fasteners.querySelector(".fasteners__circle-image");
+  const circleImgs   = fasteners.querySelectorAll(".fasteners__circle-image img");
+  const circleLabel  = fasteners.querySelector(".fasteners__circle-label");
+
+
+  /* ============================================================
+     1) Открытие / закрытие секции
+  ============================================================ */
+  headerBtn.addEventListener("click", () => {
+    const willOpen = !content.classList.contains("active");
+
+    content.classList.toggle("active", willOpen);
+    fasteners.classList.toggle("fasteners--open", willOpen);
+
+    if (willOpen) {
+      setMethod("overview");
+    }
+  });
+
+
+  /* ============================================================
+     2) Главная функция выбора метода
+  ============================================================ */
+  function setMethod(method) {
+
+    /* --- 2.1 Табы --- */
+    tabs.forEach(tab => {
+      tab.classList.toggle(
+        "fasteners__tab--active",
+        tab.dataset.method === method
+      );
+    });
+
+    /* --- 2.2 Текстовые панели --- */
+    panels.forEach(panel => {
+      panel.classList.toggle(
+        "fasteners__panel--active",
+        panel.dataset.methodPanel === method
+      );
+    });
+
+    /* --- 2.3 НЕОН-схема скрывается / появляется --- */
+    fasteners.classList.toggle("fasteners--method-selected", method !== "overview");
+
+
+    /* --- 2.4 Красные круглые точки (новые) --- */
+    dots.forEach(dot => {
+      dot.classList.toggle(
+        "fasteners__dot--active",
+        dot.dataset.method === method
+      );
+    });
+
+
+    /* --- 2.5 Круглая фотография --- */
+    if (method === "overview") {
+      circleBlock.classList.remove("fasteners__circle-image--active");
+    } else {
+      circleBlock.classList.add("fasteners__circle-image--active");
+    }
+
+    circleImgs.forEach(img => {
+      img.classList.toggle(
+        "circle-active",
+        img.dataset.methodPanel === method
+      );
+    });
+
+
+    /* --- 2.6 Текст внутри красного круга --- */
+    const labels = {
+      pockets: "КАРМАНЫ",
+      velcro: "ЛИПУЧКИ",
+      eyelets: "ЛЮВЕРСЫ"
+    };
+
+    circleLabel.textContent = labels[method] || "";
+  }
+
+
+  /* ============================================================
+     3) Клик по табам
+  ============================================================ */
+  tabs.forEach(tab => {
+    tab.addEventListener("click", () => {
+      setMethod(tab.dataset.method);
+    });
+  });
+
+
+  /* ============================================================
+     4) Клик по старым hotspot-кнопкам
+  ============================================================ */
+  hotspots.forEach(h => {
+    h.addEventListener("click", () => {
+      setMethod(h.dataset.method);
+    });
+  });
+
+
+  /* ============================================================
+     5) Клик по НОВЫМ круговым точкам
+  ============================================================ */
+  dots.forEach(dot => {
+    dot.addEventListener("click", () => {
+      setMethod(dot.dataset.method);
+    });
+  });
+
+});
+
