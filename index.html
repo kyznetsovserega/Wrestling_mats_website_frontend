@@ -1,9 +1,10 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="ru" xmlns="http://www.w3.org/1999/html">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+    <!-- Favicon -->
     <link rel="icon" href="static/favicon.ico" type="image/x-icon">
     <link rel="shortcut icon" href="static/favicon.ico" type="image/x-icon">
 
@@ -20,15 +21,17 @@
 <body class="page">
 
     <!-- =========================================================
-         HEADER
+         HEADER (логотип, навигация, CTA, бургер)
     ========================================================== -->
     <header class="layout-header" id="header">
         <div class="container layout-header__inner">
 
+            <!-- Логотип -->
             <a href="https://prospectboxing.ru/" class="layout-header__logo" aria-label="Prospect Boxing">
                 <img src="static/images/Logo_ProspectBoxing_White_red.svg" alt="Логотип Prospect Boxing">
             </a>
 
+            <!-- Логотип -->
             <nav class="main-nav layout-header__nav" aria-label="Основная навигация">
                 <a class="main-nav__link" href="#hero">Главная</a>
                 <a class="main-nav__link" href="#mat-types">Типы ковров</a>
@@ -36,18 +39,19 @@
                 <a class="main-nav__link" href="#benefits">FAQ</a>
             </nav>
 
+            <!-- Десктоп-меню -->
             <button class="button button--primary layout-header__cta" id="contacts-btn" type="button">
                 Контакты →
             </button>
 
-            <!-- Burger -->
+            <!-- Бургер для мобильного меню -->
             <button class="burger layout-header__burger" id="burger" type="button" aria-label="Открыть меню">
                 <span class="burger__icon"></span>
             </button>
 
         </div>
 
-        <!-- Mobile nav -->
+        <!-- Мобильное меню -->
         <nav class="mobile-nav" id="mobileNav" aria-label="Мобильная навигация">
             <a class="mobile-nav__link" href="#hero">Главная</a>
             <a class="mobile-nav__link" href="#mat-types">Типы ковров</a>
@@ -60,36 +64,38 @@
     </header>
 
     <!-- =========================================================
-         LEFT SOCIAL BAR
+         ЛЕВАЯ СОЦИАЛЬНАЯ ПАНЕЛЬ
     ========================================================== -->
     <aside class="social-bar" aria-label="Социальные сети">
         <div class="social-bar__label">Follow +</div>
-
+        <!-- VK -->
         <a href="https://vk.com/prospectboxing" target="_blank" class="social-link social-link--vk">
             <span class="social-link__short">VK</span>
             <span class="social-link__full">VKontakte</span>
         </a>
-
+        <!-- WhatsApp -->
         <a href="https://wa.me/79189755618" target="_blank" class="social-link social-link--wa">
             <span class="social-link__short">WA</span>
             <span class="social-link__full">WhatsApp</span>
         </a>
     </aside>
 
-    <!-- =========================================================
-         HERO
-    ========================================================== -->
+
     <main class="page__main">
 
+         <!-- =========================================================
+                HERO: главный экран + CTA + стартовая цена
+        ========================================================== -->
         <section id="hero" class="hero">
             <div class="hero__container">
 
+                <!-- Заголовок -->
                 <div class="hero__content">
                     <h1 class="hero__title">
                         Борцовские ковры<br>от производителя
                     </h1>
                 </div>
-
+                <!-- CTA + цена -->
                 <div class="hero__actions">
                     <a href="#calculator" class="button button--primary hero__button">
                         Рассчитать стоимость →
@@ -104,11 +110,12 @@
         </section>
 
         <!-- =====================================================
-             TICKER
+             БЕГУЩАЯ СТРОКА (ticker)
         ====================================================== -->
         <section class="ticker" aria-label="Акции">
             <div class="ticker__track">
 
+                <!-- Основная группа -->
                 <div class="ticker__group">
                     <div class="ticker__item">
                         <img class="ticker__logo" src="static/images/Logo_ProspectBoxing_Black_red.svg" alt="">
@@ -131,7 +138,7 @@
                     </div>
                 </div>
 
-                <!--  Дубль — обязателен для бесконечного движения -->
+                <!--  Дубликат для бесконечного движения -->
                 <div class="ticker__group">
                     <div class="ticker__item">
                         <img class="ticker__logo" src="static/images/Logo_ProspectBoxing_Black_red.svg" alt="">
@@ -157,19 +164,73 @@
             </div>
         </section>
 
+
         <!-- =====================================================
-             MATS
+             Краткое описание с примерами
+        ====================================================== -->
+        <section class="mats-intro">
+            <div class="mats-intro__inner">
+
+                <!-- Описание -->
+                <header class="mats-intro__header">
+                    <h4 class="mats-intro__text">
+                        Мы производим ковры в любых цветах и стилях <br>
+                        — от стандартных расцветок до полностью индивидуального дизайна под ваш бренд.<br>
+                        Любая идея станет готовым покрытием.
+                    </h4>
+                </header>
+
+                <!-- Линия иконок -->
+                <div class="mats-intro__icons">
+
+                    <div class="mats-intro__item">
+                        <img class="mats-intro__icon"
+                             src="static/images/icon_mats/icon_freestyle_and_greco-roman_wrestling.png"
+                             alt="Вольная и Греко-римская борьба">
+                        <p class="mats-intro__label">Вольная и Греко-римская борьба</p>
+                    </div>
+
+                    <div class="mats-intro__item">
+                        <img class="mats-intro__icon"
+                             src="static/images/icon_mats/icon_sambo_and_combat_sambo.png"
+                             alt="Самбо и Боевое самбо">
+                        <p class="mats-intro__label">Ковер для Самбо и Боевого самбо</p>
+                    </div>
+
+                    <div class="mats-intro__item">
+                        <img class="mats-intro__icon"
+                             src="static/images/icon_mats/icon_judo.png"
+                             alt="Дзюдо">
+                        <p class="mats-intro__label">Ковер для Дзюдо</p>
+                    </div>
+
+                    <div class="mats-intro__item">
+                        <img class="mats-intro__icon"
+                             src="static/images/icon_mats/icon_mma.png"
+                             alt="ММА">
+                        <p class="mats-intro__label">Ковер для ММА</p>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+
+        <!-- =====================================================
+             MAT TYPES — карточки типов ковров
         ====================================================== -->
         <section id="mat-types" class="mats">
             <div class="container mats__inner">
 
+                <!-- Заголовок секции -->
                 <header class="section-heading mats__heading">
                     <h2 class="section-heading__title">Типы матов</h2>
                 </header>
 
+                <!-- Заголовок секции -->
                 <div class="mats__grid">
 
-                    <!-- Card 1 — СТАРТ -->
+                    <!-- Карточка 1 — СТАРТ -->
                     <article class="mat-card"
                              data-title="СТАРТ"
                              data-img="static/images/mat_npa.png"
@@ -178,6 +239,7 @@
                              data-life="до 3 лет"
                              data-recommend="Для секций и новичков">
 
+                        <!-- Медиа + кнопка раскрытия -->
                         <div class="mat-card__media">
                             <img class="mat-card__image"
                                  src="static/images/mat_npa.png"
@@ -185,13 +247,15 @@
                                  data-hover="static/images/slice_npa.png"
                                  alt="Ковер СТАРТ">
 
+                            <!-- Кнопка открытия sheet -->
                             <button class="mat-card__expand" type="button"
                                     aria-label="Подробнее о ковре СТАРТ">+</button>
                         </div>
 
+                        <!-- Текст карточки -->
                         <div class="mat-card__body">
                             <h3 class="mat-card__title">СТАРТ</h3>
-                            <div class="mat-card__type">НПЭ</div>
+                            <div class="mat-card__type">Тип мягкой подложки:НПЭ</div>
                             <ul class="mat-card__list">
                                 <li>Плотность — <b>140 кг/м³</b></li>
                                 <li>Срок службы — <b>до 3 лет</b></li>
@@ -200,7 +264,7 @@
                         </div>
                     </article>
 
-                    <!-- Card 2 — МАСТЕР -->
+                    <!-- Карточка 2 — МАСТЕР -->
                     <article class="mat-card"
                              data-title="МАСТЕР"
                              data-img="static/images/mat_npa-ppa.png"
@@ -222,7 +286,7 @@
 
                         <div class="mat-card__body">
                             <h3 class="mat-card__title">МАСТЕР</h3>
-                            <div class="mat-card__type">НПЭ + ППЭ</div>
+                            <div class="mat-card__type">Тип мягкой подложки:НПЭ + ППЭ</div>
                             <ul class="mat-card__list">
                                 <li>Плотность — <b>160 кг/м³</b></li>
                                 <li>Срок службы — <b>3–5 лет</b></li>
@@ -253,7 +317,7 @@
 
                         <div class="mat-card__body">
                             <h3 class="mat-card__title">ПРОФИ</h3>
-                            <div class="mat-card__type">ППЭ</div>
+                            <div class="mat-card__type">Тип мягкой подложки:ППЭ</div>
                             <ul class="mat-card__list">
                                 <li>Плотность — <b>180 кг/м³</b></li>
                                 <li>Срок службы — <b>10–15 лет</b></li>
@@ -284,7 +348,7 @@
 
                         <div class="mat-card__body">
                             <h3 class="mat-card__title">КЛАССИК</h3>
-                            <div class="mat-card__type">ПВВ</div>
+                            <div class="mat-card__type">Тип мягкой подложки:ПВВ</div>
                             <ul class="mat-card__list">
                                 <li>Плотность — <b>от 120 до 240 кг/м3</b></li>
                                 <li>Срок службы — <b>более 10 лет</b></li>
@@ -298,11 +362,11 @@
         </section>
 
         <!-- =====================================================
-                СПОСОБ КРЕПЛЕНИЯ
+        СПОСОБ КРЕПЛЕНИЯ(FIXING METHODS) — интерактивная схема + табы
         ====================================================== -->
         <section class="fasteners" id="fasteners">
 
-          <!-- Свернутое состояние (кликабельная шапка) -->
+          <!-- Заголовок-спойлер -->
           <button class="fasteners__header" type="button">
             <div class="fasteners__header-inner">
               <div class="fasteners__header-text">
@@ -322,16 +386,18 @@
 
               <div class="fasteners__layout">
 
+                <!-- Левая часть — схема -->
                 <div class="fasteners__scheme">
 
+                  <!-- Базовое изображение схемы -->
                   <div class="fasteners__scheme-base">
 
-                    <!-- НЕОНОВАЯ СХЕМА -->
+                    <!-- Неоновая схема -->
                     <img src="static/images/fixing_method/mats_neon.png"
                          class="fasteners__scheme-image"
                          alt="Схема крепления ковра">
 
-                    <!-- ГЛАВНОЕ БОЛЬШОЕ КРУГЛОЕ ИЗОБРАЖЕНИЕ -->
+                    <!-- Центральное круглое изображение -->
                     <div class="fasteners__circle-image">
                       <img src="static/images/fixing_method/fixing_method_pockets.png" data-method-panel="pockets">
                       <img src="static/images/fixing_method/fixing_method_velcro.png" data-method-panel="velcro">
@@ -339,7 +405,7 @@
                       <div class="fasteners__circle-label"></div>
                     </div>
 
-                    <!-- КНОПКИ НА СХЕМЕ (как в PDF) -->
+                    <!-- Кнопки на схеме -->
                     <button class="fasteners__hotspot fasteners__hotspot--pockets" data-method="pockets">
                       Карманы
                     </button>
@@ -352,7 +418,7 @@
                       Люверсы
                     </button>
 
-                    <!-- Три круглые точки под схемой -->
+                    <!-- точки-переключатели (не активные) -->
                     <button class="fasteners__dot" data-method="velcro"></button>
                     <button class="fasteners__dot" data-method="pockets"></button>
                     <button class="fasteners__dot" data-method="eyelets"></button>
@@ -362,7 +428,7 @@
 
 
 
-                <!-- ПРАВАЯ ЧАСТЬ — табы + текст -->
+                <!-- Правая часть — табы + текст -->
                 <div class="fasteners__info">
 
                   <!-- Табы -->
@@ -384,6 +450,7 @@
                   <!-- Панели контента -->
                   <div class="fasteners__panels">
 
+                    <!-- Обзор панель -->
                     <div class="fasteners__panel" data-method-panel="overview">
                       <h3 class="fasteners__panel-title"></h3>
                       <p class="fasteners__panel-text">
@@ -396,6 +463,7 @@
                       </p>
                     </div>
 
+                    <!-- Панель: липучки -->
                     <div class="fasteners__panel" data-method-panel="velcro">
                       <h3 class="fasteners__panel-title">Липучки (Velcro)</h3>
                       <p class="fasteners__panel-text">
@@ -405,6 +473,7 @@
                       </p>
                     </div>
 
+                    <!-- Панель: люверсы -->
                     <div class="fasteners__panel" data-method-panel="eyelets">
                       <h3 class="fasteners__panel-title">Люверсы</h3>
                         <p class="fasteners__panel-text">
@@ -414,6 +483,7 @@
                         </p>
                     </div>
 
+                    <!-- Панель: карманы -->
                     <div class="fasteners__panel" data-method-panel="pockets">
                       <h3 class="fasteners__panel-title">Карманы</h3>
                         <p class="fasteners__panel-text">
@@ -430,24 +500,25 @@
 
             </div>
           </div>
+
+          <!-- Разделительная линия -->
           <div class="fasteners-line"></div>
         </section>
 
-
-
-
-
         <!-- =====================================================
-             GALLERY
+             GALLERY — слайдер с примерами
         ====================================================== -->
         <section id="gallery" class="gallery">
             <div class="container">
 
+                <!-- Слайдер -->
                 <div class="gallery-slider">
 
+                    <!-- Управление слайдами -->
                     <input type="radio" name="gallery" id="gal-1" class="gallery-slider__control" checked>
                     <input type="radio" name="gallery" id="gal-2" class="gallery-slider__control">
 
+                    <!-- Контейнер слайдов -->
                     <div class="gallery-slider__inner">
                         <div class="gallery-slider__slide">
                             <div class="gallery-slider__item"></div>
@@ -462,6 +533,7 @@
                         </div>
                     </div>
 
+                    <!-- Точки управления -->
                     <div class="gallery-slider__dots">
                         <label for="gal-1" class="gallery-slider__dot"></label>
                         <label for="gal-2" class="gallery-slider__dot"></label>
@@ -472,17 +544,20 @@
         </section>
 
         <!-- =====================================================
-             BENEFITS
+             BENEFITS — карточки преимуществ
         ====================================================== -->
         <section id="benefits" class="benefits">
             <div class="container benefits__inner">
 
+                <!-- Заголовок -->
                 <header class="section-heading benefits__heading">
                     <h2 class="section-heading__title">Почему выбирают нас</h2>
                 </header>
 
+                <!-- Грид преимуществ -->
                 <div class="benefits__grid">
 
+                <!-- Карточка -->
                 <article class="benefit-card">
                     <div class="benefit-card__icon">
                         <img src="static/icons/advantages/quality.svg" alt="Качество">
@@ -517,18 +592,18 @@
                     </p>
                 </article>
 
-
                 </div>
 
             </div>
         </section>
 
         <!-- =====================================================
-             CALCULATOR
+             CALCULATOR — форма для расчёта стоимости
         ====================================================== -->
         <section id="calculator" class="calculator">
             <div class="container">
 
+                <!-- Панель калькулятора -->
                 <div class="calculator__panel">
                     <header class="calculator__header">
                         <h2 class="calculator__title">Рассчитать стоимость ковра</h2>
@@ -537,26 +612,35 @@
                         </p>
                     </header>
 
+                    <!-- Форма -->
                     <form class="calculator__form" novalidate>
+
+                        <!-- Первая строка -->
                         <div class="calculator__row">
+
+                            <!-- Тип ковра -->
                             <div class="calculator__field">
                                 <label class="calculator__label">Тип ковра</label>
                                 <select class="calculator__control" required>
                                     <option value="">Выберите…</option>
-                                    <option>СТАРТ</option>
-                                    <option>МАСТЕР</option>
-                                    <option>ПРОФИ</option>
-                                    <option>КЛАССИК</option>
+                                    <option>СТАРТ - НПЭ</option>
+                                    <option>МАСТЕР - НПЭ + ППЭ</option>
+                                    <option>ПРОФИ - ППЭ</option>
+                                    <option>КЛАССИК - ПВВ</option>
                                 </select>
                             </div>
 
+                            <!-- Площадь -->
                             <div class="calculator__field">
                                 <label class="calculator__label">Площадь помещения (м²)</label>
                                 <input class="calculator__control" type="number" placeholder="Например, 120" required>
                             </div>
                         </div>
 
+                        <!-- Площадь -->
                         <div class="calculator__row">
+
+                            <!-- Толщина -->
                             <div class="calculator__field">
                                 <label class="calculator__label">Необходимая толщина (мм)</label>
                                 <select class="calculator__control" required>
@@ -568,6 +652,7 @@
                                 </select>
                             </div>
 
+                            <!-- Тип крепления -->
                             <div class="calculator__field">
                                 <label class="calculator__label">Способ крепления</label>
                                 <select class="calculator__control" required>
@@ -578,12 +663,14 @@
                                 </select>
                             </div>
 
+                            <!-- Телефон -->
                             <div class="calculator__field">
                                 <label class="calculator__label">Ваш телефон</label>
                                 <input class="calculator__control" type="tel" placeholder="+7 (___) ___-__-__" required>
                             </div>
                         </div>
 
+                        <!-- Кнопка отправки -->
                         <button class="button button--primary button--wide calculator__submit" type="submit">
                             Отправить заявку
                         </button>
@@ -596,15 +683,17 @@
     </main>
 
     <!-- =========================================================
-         FOOTER
+         FOOTER — навигация, контакты, соцсети
     ========================================================== -->
     <footer class="layout-footer" id="footer">
         <div class="container layout-footer__inner">
 
+            <!-- Левая колонка -->
             <div class="layout-footer__col">
                 <p class="layout-footer__muted">© Prospect Boxing 2025</p>
             </div>
 
+            <!-- Навигация -->
             <div class="layout-footer__col">
                 <h4 class="layout-footer__title">Навигация</h4>
                 <ul class="layout-footer__list">
@@ -615,6 +704,7 @@
                 </ul>
             </div>
 
+            <!-- Контакты -->
             <div class="layout-footer__col">
                 <h4 class="layout-footer__title">Контакты</h4>
                 <ul class="layout-footer__list">
@@ -624,6 +714,7 @@
                 </ul>
             </div>
 
+            <!-- Социальные сети -->
             <div class="layout-footer__col">
                 <h4 class="layout-footer__title">Мы в соцсетях</h4>
                 <div class="layout-footer__socials">
@@ -633,35 +724,38 @@
             </div>
 
         </div>
-
+        <!-- Нижняя строка -->
         <div class="layout-footer__bottom">
             © 2025 Prospect Boxing — Все права защищены
         </div>
     </footer>
 
     <!-- =========================================================
-         PRODUCT SHEET (MODAL)
+         PRODUCT SHEET — модальное окно карточки ковра
     ========================================================== -->
     <div class="product-sheet" id="productSheet" role="dialog" aria-modal="true" aria-hidden="true">
+
+        <!-- Затемнение -->
         <div class="product-sheet__overlay" data-sheet-close></div>
 
+        <!-- Панель -->
         <div class="product-sheet__panel">
             <button class="product-sheet__close" type="button" aria-label="Закрыть">&times;</button>
 
             <div class="product-sheet__layout">
 
-                <!-- Col 1 -->
+                <!-- Колонка 1 — изображение ковра -->
                 <div class="product-sheet__col product-sheet__col--media">
-                    <div class="product-sheet__label">Тип ковра</div>
+                    <div class="product-sheet__label">Модель</div>
                     <h2 class="product-sheet__title js-sheet-title"></h2>
 
-                    <!-- ВАЖНО: wrapper ДОЛЖЕН быть внутри этой колонки -->
+                    <!-- Обёртка изображения -->
                     <div class="product-sheet__image-wrapper">
 
                         <!-- Основное изображение -->
                         <img class="product-sheet__image js-sheet-image" src="" alt="Ковер">
 
-                        <!-- Slice Overlay -->
+                        <!-- Slice-перекрытие -->
                         <div class="slice-overlay">
                             <img class="slice-overlay__img js-slice-img" src="" alt="">
                         </div>
@@ -675,17 +769,23 @@
                 </div>
 
 
-                <!-- Col 2 -->
+                <!-- Колонка 2 — свойства ковра + размеры -->
                 <div class="product-sheet__col product-sheet__col--details">
+
+                     <!-- Комплектация -->
                     <div class="product-sheet__block">
                         <h3 class="product-sheet__block-title">Комплектация</h3>
                         <ul class="product-sheet__list js-sheet-specs"></ul>
                     </div>
 
+                    <!-- Размеры -->
                     <div class="product-sheet__block">
                         <div class="product-sheet__label">Размер ковра</div>
 
+                        <!-- Выбор размера -->
                         <div class="size-selector">
+
+                            <!-- Пресеты -->
                             <button class="size-selector__button js-size-option"
                                     type="button" data-size="6x6">
                                 6×6 м
@@ -703,11 +803,13 @@
                                 12×12 м
                             </button>
 
+                            <!-- Индивидуальный размер -->
                             <button class="size-selector__button size-selector__button--outline js-size-option"
                                     type="button" data-size="custom">
                                 Индивидуально
                             </button>
 
+                            <!-- Поля ввода -->
                             <div class="size-selector__custom js-size-custom">
                                 <div class="size-selector__row">
                                     <input type="number" class="size-selector__input js-size-width" placeholder="Ш">
@@ -719,6 +821,8 @@
                             </div>
 
                         </div>
+
+                        <!-- Тип крепления -->
                         <div class="product-sheet__field">
                             <label class="product-sheet__label" >Способ крепления</label>
                             <select class="product-sheet__input" required>
@@ -732,9 +836,10 @@
 
                 </div>
 
-                <!-- Col 3 -->
+                <!-- Колонка 3 — цена + форма заявки -->
                 <div class="product-sheet__col product-sheet__col--form">
 
+                    <!-- Блок цены -->
                     <div class="product-sheet__price-card">
                         <div class="product-sheet__price-label">Примерная стоимость</div>
                         <div class="product-sheet__price-value js-price-value">от 300 руб/м²</div>
@@ -743,22 +848,28 @@
                         </div>
                     </div>
 
+                    <!-- Форма -->
                     <form class="product-sheet__form" novalidate>
+
+                        <!-- Имя -->
                         <label class="product-sheet__field">
                             <span class="product-sheet__field-label">Ваше имя</span>
                             <input type="text" class="product-sheet__input" placeholder="Как к вам обращаться?">
                         </label>
 
+                        <!-- Телефон -->
                         <label class="product-sheet__field">
                             <span class="product-sheet__field-label">Телефон</span>
                             <input type="tel" class="product-sheet__input" placeholder="+7 (___) ___-__-__">
                         </label>
 
+                        <!-- E-mail -->
                         <label class="product-sheet__field">
                             <span class="product-sheet__field-label">E-mail (необязательно)</span>
                             <input type="email" class="product-sheet__input" placeholder="example@mail.ru">
                         </label>
 
+                        <!-- Кнопка -->
                         <button class="button button--primary product-sheet__submit" type="submit">
                             Получить точный расчёт
                         </button>

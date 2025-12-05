@@ -1,19 +1,20 @@
 /* ========================================================================== */
 /* LANDING.CSS — Prospect Boxing (BEM)                                        */
+/* Основные UI-блоки лендинга + адаптив                                        */
 /* ========================================================================== */
 
-/* ============================================================
-   SUPER FLUID HEADER — премиальная адаптация 2025
-============================================================ */
 
-/* Главная переменная высоты */
+/* ==========================================================================
+   HEADER — переменная высоты
+========================================================================== */
 :root {
   --header-height: clamp(56px, 8vw, 92px);
 }
 
-/* ------------------------------------------------------------
-   БАЗОВЫЙ HEADER
------------------------------------------------------------- */
+
+/* ==========================================================================
+   HEADER — фиксированная шапка сайта
+========================================================================== */
 .layout-header {
   position: fixed;
   inset: 0;
@@ -29,19 +30,20 @@
   transition: background .35s ease, box-shadow .35s ease, backdrop-filter .35s ease;
   z-index: 9999;
 
-  overflow: visible; /* ← фикс обрезания крестика */
+  overflow: visible; /* фикс: не обрезать крестик у модалок */
 }
 
-/* Header on scroll */
+/* Состояние прокрутки */
 body.scrolled .layout-header {
   background: rgba(255,255,255,0.85);
   box-shadow: 0 4px 28px rgba(0,0,0,.4);
   backdrop-filter: blur(8px);
 }
 
-/* ------------------------------------------------------------
-   ВНУТРЕННЯЯ СЕТКА
------------------------------------------------------------- */
+
+/* ==========================================================================
+   HEADER GRID — контейнер с навигацией и логотипом
+========================================================================== */
 .layout-header__inner {
   width: 100%;
   height: 100%;
@@ -53,13 +55,13 @@ body.scrolled .layout-header {
   gap: clamp(12px, 3vw, 48px);
 }
 
-/* ------------------------------------------------------------
-   ЛОГО
------------------------------------------------------------- */
+
+/* ==========================================================================
+   LOGO — контейнер логотипа
+========================================================================== */
 .layout-header__logo {
   width: var(--header-height);
   height: var(--header-height);
-
   background: #000;
 
   display: flex;
@@ -74,9 +76,10 @@ body.scrolled .layout-header {
   height: auto;
 }
 
-/* ------------------------------------------------------------
-   DESKTOP NAVIGATION
------------------------------------------------------------- */
+
+/* ==========================================================================
+   DESKTOP NAVIGATION — навигация в десктопной версии
+========================================================================== */
 .main-nav {
   display: flex;
   align-items: center;
@@ -95,9 +98,10 @@ body.scrolled .layout-header {
   color: var(--color-accent);
 }
 
-/* ------------------------------------------------------------
-   CTA Кнопка
------------------------------------------------------------- */
+
+/* ==========================================================================
+   CTA BUTTON — кнопка "Контакты"
+========================================================================== */
 .layout-header__cta {
   height: var(--header-height);
   display: flex;
@@ -112,9 +116,10 @@ body.scrolled .layout-header {
   white-space: nowrap;
 }
 
-/* ------------------------------------------------------------
-   БУРГЕР
------------------------------------------------------------- */
+
+/* ==========================================================================
+   BURGER — иконка мобильного меню
+========================================================================== */
 .burger {
   display: none;
   width: clamp(56px, 10vw, 80px);
@@ -124,9 +129,9 @@ body.scrolled .layout-header {
   z-index: 20000;
 }
 
-/* Иконка */
+/* Иконка состояний */
 .burger__icon {
-  font-size: clamp(26px, 7vw, 40px);
+  font-size: clamp(32px, 9vw, 52px);
   line-height: 1;
   color: #ff4444;
   display: flex;
@@ -136,18 +141,17 @@ body.scrolled .layout-header {
   font-weight: 900;
 }
 
-/* СТАТУС: закрыто → стрелка вперед (красивая) */
+/* Закрыто */
 .burger:not(.active) .burger__icon::before { content: "☰"; }
 
-/* СТАТУС: открыто → геометрический крест */
+/* Открыто */
 .burger.active .burger__icon::before { content: "✖"; }
 
 
 
-
-/* ------------------------------------------------------------
-   MOBILE NAV (единая версия!)
------------------------------------------------------------- */
+/* ==========================================================================
+   MOBILE NAV — раскрывающееся мобильное меню
+========================================================================== */
 .mobile-nav {
   display: none;
   flex-direction: column;
@@ -165,8 +169,7 @@ body.scrolled .layout-header {
   gap: clamp(14px, 4vw, 28px);
 
   z-index: 9998;
-
-  overflow: visible; /* ← чтобы "X" не обрезался */
+  overflow: visible; /* фикс: не обрезать X */
 }
 
 .mobile-nav.show {
@@ -184,43 +187,46 @@ body.scrolled .layout-header {
   font-weight: 600;
 }
 
-/* ------------------------------------------------------------
-   SUPER-ADAPTIVE BREAKPOINTS
------------------------------------------------------------- */
+
+/* ==========================================================================
+   BREAKPOINTS — переключение между desktop/mob
+========================================================================== */
 @media (max-width: 900px) {
-  .main-nav {
-    display: none;
-  }
-  .layout-header__cta {
-    display: none;
-  }
-  .burger {
-    display: flex;
-  }
+  .main-nav { display: none; }
+  .layout-header__cta { display: none; }
+  .burger { display: flex; }
 }
 
 
-/* SOCIAL BAR --------------------------------------------------------------- */
+
+/* ==========================================================================
+   SOCIAL BAR — вертикальная панель социальных ссылок
+   (фиксированная позиция слева, скрывается при прокрутке/мобиле)
+========================================================================== */
 
 .social-bar {
   position: fixed;
   top: calc(var(--header-height) + 120px);
   left: 120px;
   width: 50px;
+
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 18px;
+
   z-index: 9998;
   transition: opacity 0.3s ease, transform 0.3s ease;
 }
 
+/* Скрытое состояние (при скролле/логике JS) */
 .social-bar.hidden {
   opacity: 0;
   pointer-events: none;
   transform: translateX(-10px);
 }
 
+/* Вертикальная подпись */
 .social-bar__label {
   writing-mode: vertical-rl;
   font-size: 12px;
@@ -230,20 +236,29 @@ body.scrolled .layout-header {
   text-transform: uppercase;
 }
 
+
+/* ==========================================================================
+   SOCIAL LINK — короткая + полная версия
+   (наводим → короткая скрывается, полная появляется)
+========================================================================== */
+
 .social-link {
   position: relative;
   font-size: 12px;
   color: #777;
   cursor: pointer;
   height: 16px;
+
   display: inline-flex;
   align-items: center;
 }
 
+/* Короткий текст */
 .social-link__short {
   transition: 0.25s ease;
 }
 
+/* Развёрнутый текст */
 .social-link__full {
   position: absolute;
   left: 0;
@@ -252,6 +267,7 @@ body.scrolled .layout-header {
   transition: 0.25s ease;
 }
 
+/* Hover-эффект — меняем короткий на полный */
 .social-link:hover .social-link__short {
   opacity: 0;
 }
@@ -260,7 +276,10 @@ body.scrolled .layout-header {
   color: var(--color-accent);
 }
 
-/* MOBILE PORTRAIT — полностью скрываем SOCIAL BAR */
+
+/* ==========================================================================
+   MOBILE PORTRAIT — скрываем social-bar на телефонах
+========================================================================== */
 @media (max-width: 600px) and (orientation: portrait) {
   .social-bar {
     display: none !important;
@@ -268,8 +287,9 @@ body.scrolled .layout-header {
 }
 
 
+
 /* ============================================================
-   HERO — динамичный, fluid, без media-queries
+   HERO — главный экран, центрирует контент и управляет высотой
 ============================================================ */
 .hero {
     min-height: calc(100dvh - var(--header-height) - 3vh);
@@ -287,9 +307,8 @@ body.scrolled .layout-header {
 }
 
 
-
 /* ============================================================
-   HERO BACKGROUND — единый корректный слой (::after)
+   HERO BACKGROUND — фон через ::after (масштаб + лёгкое размытие)
 ============================================================ */
 .hero::after {
     content: "";
@@ -301,7 +320,6 @@ body.scrolled .layout-header {
     background-position: center;
     background-repeat: no-repeat;
 
-    /* базовое размытие и масштаб */
     filter: blur(0.5px);
     transform: scale(1.06);
     transform-origin: center;
@@ -310,11 +328,9 @@ body.scrolled .layout-header {
 }
 
 
-
 /* ============================================================
-   MOBILE PORTRAIT — поворот фона на 90° + компенсация масштаба
+   MOBILE PORTRAIT — поворот фона 90° + компенсация масштаба
 ============================================================ */
-
 @media (max-width: 600px) and (orientation: portrait) {
     .hero::after {
         transform: rotate(90deg) scale(2.15);
@@ -322,7 +338,7 @@ body.scrolled .layout-header {
 
         background-size: contain !important;
 
-        /* Поднимаем фон вверх, чтобы нижняя надпись ушла */
+        /* смещение вверх для корректного кадрирования */
         background-position: calc(50% -6%) calc(50% + 45%) !important;
 
         background-repeat: no-repeat !important;
@@ -331,8 +347,8 @@ body.scrolled .layout-header {
 
 
 /* ============================================================
-   HERO OVERLAY LAYER (::before)
-   — глобальное затемнение + виньетка + шум
+   HERO OVERLAY (::before)
+   — виньетка + вертикальный градиент + шум
 ============================================================ */
 .hero::before {
     content: "";
@@ -340,19 +356,16 @@ body.scrolled .layout-header {
     inset: 0;
 
     background:
-        /* Виньетка */
         radial-gradient(
             circle at center,
             rgba(0,0,0,0) 40%,
             rgba(0,0,0,0.55) 100%
         ),
-        /* Вертикальный градиент */
         linear-gradient(
             rgba(0,0,0,0.70) 0%,
             rgba(0,0,0,0.40) 35%,
             rgba(0,0,0,0.55) 100%
         ),
-        /* Шум */
         url('../images/noise.png');
 
     opacity: 0.22;
@@ -363,9 +376,8 @@ body.scrolled .layout-header {
 }
 
 
-
 /* ============================================================
-   HERO CONTENT — центральная адаптивная колонна
+   HERO CONTENT — центральная колонна (анимация появления)
 ============================================================ */
 .hero__container {
     position: relative;
@@ -389,10 +401,9 @@ body.scrolled .layout-header {
 }
 
 
-
 /* ============================================================
-   Заголовок HERO
-   ============================================================ */
+   Заголовок HERO — крупная fluid-типографика
+============================================================ */
 .hero__title {
     font-size: clamp(28px, 5vw, 64px);
     font-weight: 700;
@@ -402,8 +413,8 @@ body.scrolled .layout-header {
 
 
 /* ============================================================
-   Блок CTA
-   ============================================================ */
+   CTA BLOCK — кнопки действий + цена
+============================================================ */
 .hero__actions {
     display: flex;
     flex-direction: row;
@@ -414,8 +425,7 @@ body.scrolled .layout-header {
 }
 
 
-
-/* Размер элементов */
+/* Элементы внутри CTA (кнопки и цена) */
 .hero__actions > * {
     height: clamp(48px, 9vw, 70px);
     padding-inline: clamp(24px, 6vw, 40px);
@@ -426,22 +436,20 @@ body.scrolled .layout-header {
 }
 
 
-
-/* Кнопка */
+/* Основная CTA-кнопка */
 .hero__button {
     font-size: clamp(16px, 2.2vw, 20px);
     border-radius: 0 !important;
 }
 
 
-/* Кнопка "Контакты" */
+/* Альтернативная кнопка (Контакты) */
 #contacts-btn {
     border-radius: 0 !important;
 }
 
 
-
-/* Цена */
+/* Цена под CTA — выделенный акцент */
 .hero__price {
     font-size: clamp(28px, 3vw, 42px);
     font-weight: 600;
@@ -453,8 +461,7 @@ body.scrolled .layout-header {
 }
 
 
-
-/* Анимация появления */
+/* Анимация появления контента HERO */
 @keyframes heroFadeIn {
     to {
         opacity: 1;
@@ -462,8 +469,11 @@ body.scrolled .layout-header {
     }
 }
 
-/* TICKER ------------------------------------------------------------------- */
 
+
+/* ---------------------------------------------------------------------------
+   TICKER — бегущая строка с логотипами и текстом
+--------------------------------------------------------------------------- */
 .ticker {
     height: 34px;
     overflow: hidden;
@@ -475,17 +485,23 @@ body.scrolled .layout-header {
     align-items: center;
 }
 
+
+/* Лента (движущийся контейнер) */
 .ticker__track {
     display: flex;
     flex-wrap: nowrap;
     animation: ticker-move 26s linear infinite;
 }
 
+
+/* Группа элементов внутри ленты */
 .ticker__group {
     display: flex;
     flex-shrink: 0;
 }
 
+
+/* Единичный элемент (текст + логотипы) */
 .ticker__item {
     display: flex;
     align-items: center;
@@ -498,12 +514,16 @@ body.scrolled .layout-header {
     color: #000;
 }
 
+
+/* Логотип внутри бегущей строки */
 .ticker__logo {
     height: 24px;
     opacity: 0.9;
     filter: brightness(0) contrast(1.2);
 }
 
+
+/* Анимация горизонтального движения */
 @keyframes ticker-move {
     0%   { transform: translateX(0); }
     100% { transform: translateX(-50%); }
@@ -511,16 +531,88 @@ body.scrolled .layout-header {
 
 
 
-/* ============================================================
-   MATS — SUPER FLUID + MOBILE LEFT IMAGE LAYOUT
-============================================================ */
+/* =========================================================
+   MATS INTRO (Premium Prospect Boxing style)
+========================================================= */
 
+.mats-intro {
+    padding-top: clamp(28px, 4vw, 48px);
+    padding-bottom: 0;
+}
+
+.mats-intro__inner {
+    max-width: 1280px;
+    margin-inline: auto;
+    padding-inline: clamp(12px, 4vw, 32px);
+    display: flex;
+    flex-direction: column;
+    gap: clamp(14px, 2vw, 22px);
+}
+
+.mats-intro__header {
+    text-align: center;
+}
+
+
+.mats-intro__text {
+    margin: 0;
+    font-size: clamp(12px, 1.25vw, 14px);
+    color: #dddddd;
+    font-weight: 500;
+    line-height: 1.55;
+}
+
+/* ---------------------------------------------------------
+   ICONS ROW — всегда в одну линию
+--------------------------------------------------------- */
+
+.mats-intro__icons {
+    display: flex;
+    flex-wrap: nowrap; /* ← фиксированное расположение */
+    justify-content: center;
+    align-items: flex-start;
+    gap: clamp(18px, 4vw, 32px);
+}
+
+.mats-intro__item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: clamp(60px, 9vw, 110px);
+}
+
+.mats-intro__icon {
+    width: 100%;
+    height: auto;
+    object-fit: contain;
+    display: block;
+    transition: transform .25s ease;
+}
+
+.mats-intro__item:hover .mats-intro__icon {
+    transform: scale(1.06);
+}
+
+.mats-intro__label {
+    margin-top: 4px;
+    text-align: center;
+    font-size: clamp(8px, 1vw, 12px);
+    color: #aaa;
+    line-height: 1.35;
+    font-weight: 500;
+}
+
+
+
+/* ============================================================
+   MATS — секция с карточками покрытий (адаптивная сетка)
+   ============================================================ */
 .mats {
     background: #111;
     padding-block: clamp(24px, 6vw, 70px);
 }
 
-/* Внутренняя вертикальная структура */
+/* Вертикальная структура секции */
 .mats__inner {
     display: flex;
     flex-direction: column;
@@ -531,11 +623,13 @@ body.scrolled .layout-header {
     text-align: center;
 }
 
+/* Базовые стили медиа-контейнера */
 .mat-card__media {
     overflow: hidden;
     border-radius: 18px;
 }
 
+/* Базовое изображение + плавный ховер */
 .mat-card__image {
     width: 100%;
     display: block;
@@ -543,14 +637,15 @@ body.scrolled .layout-header {
     transform-origin: center center;
 }
 
+/* Лёгкое увеличение при ховере */
 .mat-card__image.hovered {
-    transform: scale(1.08); /* увеличение */
+    transform: scale(1.08);
 }
 
-/* ------------------------------------------------------------
-   DESKTOP GRID (auto-fit, fluid)
------------------------------------------------------------- */
 
+/* ------------------------------------------------------------
+   DESKTOP GRID — автоадаптивная сетка карточек
+------------------------------------------------------------ */
 .mats__grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
@@ -558,10 +653,10 @@ body.scrolled .layout-header {
     justify-items: center;
 }
 
-/* ------------------------------------------------------------
-   CARD BASE
------------------------------------------------------------- */
 
+/* ------------------------------------------------------------
+   CARD BASE — основная карточка
+------------------------------------------------------------ */
 .mat-card {
     width: 100%;
     max-width: 280px;
@@ -570,13 +665,14 @@ body.scrolled .layout-header {
     gap: 12px;
 }
 
-/* MEDIA — картинка */
+
+/* Картинка карточки + hover-эффект */
 .mat-card__media {
     position: relative;
     border-radius: 10px;
     overflow: hidden;
     box-shadow: 0 6px 16px rgba(0,0,0,0.25);
-    aspect-ratio: 1 / 1; /* фиксированные пропорции = НЕ растягивается */
+    aspect-ratio: 1 / 1;
     transition: 0.3s ease;
 }
 
@@ -591,6 +687,8 @@ body.scrolled .layout-header {
     object-fit: cover;
 }
 
+
+/* Кнопка раскрытия модалки */
 .mat-card__expand {
     position: absolute;
     bottom: 10px;
@@ -613,7 +711,8 @@ body.scrolled .layout-header {
     color: #fff;
 }
 
-/* BODY */
+
+/* BODY — текстовая часть карточки */
 .mat-card__body {
     display: flex;
     flex-direction: column;
@@ -637,34 +736,34 @@ body.scrolled .layout-header {
     color: var(--color-text-soft);
 }
 
+
 /* ============================================================
-   DESKTOP GRID FOR 1440
+   DESKTOP GRID for 1440 — фиксируем 4 карточки
 ============================================================ */
 @media (min-width: 800px) and (max-width: 1439px) {
     .mats__grid {
-        grid-template-columns: repeat(4, 1fr); /* фиксируем 4 карточки */
+        grid-template-columns: repeat(4, 1fr);
         gap: clamp(20px, 2vw, 32px);
     }
 
     .mat-card {
-        max-width: none; /* убрать ограничение 280px, чтобы вписывались */
+        max-width: none;
     }
 }
 
-/* ============================================================
-   MOBILE MODE (<= 700px)
-   — картинка слева
-   — текст справа
-   — товары друг под другом
-============================================================ */
 
+/* ============================================================
+   MOBILE ≤ 700px — картинка слева, текст справа
+   (мобильный layout карточек)
+============================================================ */
 @media (max-width: 700px) {
 
     .mats__grid {
-        grid-template-columns: 1fr; /* одна колонка */
+        grid-template-columns: 1fr;
         gap: 28px;
     }
 
+    /* Горизонтальная карточка */
     .mat-card {
         flex-direction: row;
         max-width: 100%;
@@ -672,7 +771,7 @@ body.scrolled .layout-header {
         align-items: flex-start;
     }
 
-    /* картинка слева */
+    /* Медиа слева */
     .mat-card__media {
         width: 40%;
         min-width: 130px;
@@ -686,7 +785,7 @@ body.scrolled .layout-header {
         object-fit: cover;
     }
 
-    /* текст справа */
+    /* Контент справа */
     .mat-card__body {
         flex: 1;
         gap: 6px;
@@ -702,6 +801,7 @@ body.scrolled .layout-header {
         line-height: 1.3;
     }
 
+    /* Уменьшенная кнопка Expand */
     .mat-card__expand {
         width: 26px;
         height: 26px;
@@ -711,13 +811,8 @@ body.scrolled .layout-header {
 
 
 
-
-
-
-
-
 /* ============================================================================
-   FASTENERS — общий контейнер
+   FASTENERS — секция типов крепления (интерактивная, с табами и схемой)
 ============================================================================ */
 .fasteners {
   background: #111;
@@ -725,7 +820,7 @@ body.scrolled .layout-header {
 }
 
 /* ============================================================================
-   СВЕРНУТАЯ ШАПКА
+   СВЕРНУТАЯ ШАПКА — кнопка открытия секции
 ============================================================================ */
 .fasteners__header {
   width: 100%;
@@ -735,6 +830,7 @@ body.scrolled .layout-header {
   cursor: pointer;
 }
 
+/* Контейнер заголовка (title + subtitle + стрелка) */
 .fasteners__header-inner {
   display: flex;
   flex-direction: column;
@@ -742,6 +838,7 @@ body.scrolled .layout-header {
   gap: 6px;
 }
 
+/* Заголовок секции */
 .fasteners__title {
   margin: 10px;
   font-size: 26px;
@@ -751,42 +848,41 @@ body.scrolled .layout-header {
   color: #e60012;
 }
 
+/* Подзаголовок */
 .fasteners__subtitle {
   margin: 0;
   font-size: 14px;
   color: #ccc;
 }
 
+/* Стрелка состояния (▼ / ▲) */
 .fasteners__toggle {
   width: 18px;
   height: 18px;
   border-right: 2px solid rgba(255,255,255,0.85);
   border-bottom: 2px solid rgba(255,255,255,0.85);
-  transform: rotate(45deg); /* ▼ вниз */
+  transform: rotate(45deg);
   transition: transform .25s ease, opacity .25s ease;
   margin-top: 10px;
-
   animation: bounce 1.8s infinite ease-in-out;
   display: inline-block;
 }
 
+/* Поворот стрелки при открытии */
 .fasteners--open .fasteners__toggle {
   transform: rotate(-135deg);
   animation: none;
 }
 
+/* Анимация "легкий прыжок" */
 @keyframes bounce {
-  0%, 100% {
-    transform: translateY(0) rotate(45deg);
-  }
-  50% {
-    transform: translateY(5px) rotate(45deg);
-  }
+  0%, 100% { transform: translateY(0) rotate(45deg); }
+  50%      { transform: translateY(5px) rotate(45deg); }
 }
 
 
 /* ============================================================================
-   РАЗВОРАЧИВАЕМАЯ ОБЛАСТЬ
+   РАЗВОРАЧИВАЕМАЯ ОБЛАСТЬ — плавное появление/скрытие
 ============================================================================ */
 .fasteners__content {
   max-height: 0;
@@ -795,18 +891,21 @@ body.scrolled .layout-header {
   transition: max-height .35s ease, opacity .3s ease;
 }
 
+/* Активное состояние */
 .fasteners__content.active {
   max-height: 3000px;
   opacity: 1;
 }
 
+/* Внутренний контейнер секции */
 .fasteners__inner {
   width: min(1100px, 88%);
   margin: 40px auto 120px;
 }
 
+
 /* ============================================================================
-   ЛЕВЫЙ + ПРАВЫЙ БЛОКИ
+   ЛЕВЫЙ + ПРАВЫЙ БЛОКИ — схема + текст/табы
 ============================================================================ */
 .fasteners__layout {
   display: grid;
@@ -814,6 +913,7 @@ body.scrolled .layout-header {
   gap: clamp(24px, 4vw, 40px);
   align-items: flex-start;
 }
+
 
 /* ============================================================================
    СХЕМА (левый блок)
@@ -823,16 +923,15 @@ body.scrolled .layout-header {
   justify-content: center;
 }
 
+/* Базовый контейнер схемы (фикс ширины против бага 430px) */
 .fasteners__scheme-base {
   position: relative;
-
-  /* ← ВАЖНО: ИМЕННО ЭТО УБИВАЕТ ПРОБЛЕМУ 430px */
   width: 520px !important;
   max-width: 100%;
   margin: 0 auto;
 }
 
-/* НЕОН-картинка */
+/* Неоновая подложка */
 .fasteners__scheme-image {
   display: block;
   width: 100%;
@@ -842,7 +941,7 @@ body.scrolled .layout-header {
 
 
 /* ============================================================================
-    КРУГ — главное изображение
+   КРУГ — активный детализированный снимок крепления
 ============================================================================ */
 .fasteners__circle-image {
   position: absolute;
@@ -855,13 +954,15 @@ body.scrolled .layout-header {
   border: 8px solid white;
   display: none;
   overflow: hidden;
-  z-index: 5; /* поверх neon */
+  z-index: 5;
 }
 
+/* Видим при выборе метода */
 .fasteners__circle-image--active {
   display: block;
 }
 
+/* Изображения внутри круга (переключаются табами) */
 .fasteners__circle-image img {
   width: 100%;
   height: 100%;
@@ -873,6 +974,7 @@ body.scrolled .layout-header {
   display: block;
 }
 
+/* Подпись в круге */
 .fasteners__circle-label {
   position: absolute;
   bottom: 6%;
@@ -884,8 +986,9 @@ body.scrolled .layout-header {
   letter-spacing: .05em;
 }
 
+
 /* ============================================================================
-   HOTSPOT-КНОПКИ (внутри схемы)
+   HOTSPOT-КНОПКИ — кликабельные метки на схеме
 ============================================================================ */
 .fasteners__hotspot {
   position: absolute;
@@ -899,35 +1002,20 @@ body.scrolled .layout-header {
   z-index: 10;
 }
 
+/* Позиции hotspot'ов */
+.fasteners__hotspot--pockets { bottom: 92%; left: 68%; }
+.fasteners__hotspot--velcro  { bottom: 6%;  left: 50%; transform: translateX(-50%); }
+.fasteners__hotspot--eyelets { bottom: 25%; right: 0%; transform: rotate(90deg); }
 
-/* карманы — справа сверху */
-.fasteners__hotspot--pockets {
-  bottom: 92%;
-  left: 68%;
-}
-
-/* липучки — нижний центр */
-.fasteners__hotspot--velcro {
-  bottom: 6%;
-  left: 50%;
-  transform: translateX(-50%);
-}
-
-/* люверсы — справа снизу */
-.fasteners__hotspot--eyelets {
-  bottom: 25%;
-  right: 0%;
-  transform: rotate(90deg);
-}
-
-/* активная */
+/* Активная метка */
 .fasteners__hotspot--active {
   background: #e60012;
   box-shadow: 0 0 14px #e60012;
 }
 
+
 /* ============================================================================
-   ПРАВАЯ ЧАСТЬ (табы + текст)
+   ПРАВАЯ ЧАСТЬ — табы и текстовые панели
 ============================================================================ */
 .fasteners__info {
   display: flex;
@@ -935,12 +1023,14 @@ body.scrolled .layout-header {
   gap: 16px;
 }
 
+/* Табы выбора метода */
 .fasteners__tabs {
   display: flex;
   gap: 18px;
   flex-wrap: wrap;
 }
 
+/* Табы (кнопки) */
 .fasteners__tab {
   background: none;
   border: none;
@@ -952,6 +1042,7 @@ body.scrolled .layout-header {
   position: relative;
 }
 
+/* Активный таб */
 .fasteners__tab--active {
   color: #e60012;
 }
@@ -965,30 +1056,34 @@ body.scrolled .layout-header {
   background: #e60012;
 }
 
-/* панели */
+
+/* Панели текста */
 .fasteners__panel {
   display: none;
 }
+
 .fasteners__panel--active {
   display: block;
 }
 
+/* Заголовок панели */
 .fasteners__panel-title {
   white-space: nowrap;
   font-weight: 700;
   margin-bottom: 10px;
-  font-size: clamp(14px, 4vw, 20px); /* динамический масштаб */
+  font-size: clamp(14px, 4vw, 20px);
   line-height: 1.1;
 }
 
-
+/* Текст панели */
 .fasteners__panel-text {
   font-size: 15px;
   color: #ddd;
   line-height: 1.55;
 }
 
-/* -- тонкая полоса -- */
+
+/* Тонкая разделительная линия */
 .fasteners-line {
   left: 0;
   bottom: 20;
@@ -1005,14 +1100,17 @@ body.scrolled .layout-header {
 ============================================================================ */
 @media (max-width: 768px) {
 
+  /* Вертикальные отступы */
   .fasteners__inner {
     margin: 32px auto 80px;
   }
 
+  /* Один столбец вместо двух */
   .fasteners__layout {
     grid-template-columns: 1fr;
   }
 
+  /* Адаптация размеров схемы */
   .fasteners__scheme-base {
     width: 92% !important;
   }
@@ -1026,54 +1124,42 @@ body.scrolled .layout-header {
     font-size: 16px;
   }
 
+  /* Компактные hotspot'ы */
   .fasteners__hotspot {
     font-size: 10px;
     padding: 5px 10px;
   }
 
-  .fasteners__hotspot--pockets {
-    bottom: 92%;
-    left: 66%;
-  }
+  .fasteners__hotspot--pockets { bottom: 92%; left: 66%; }
+  .fasteners__hotspot--velcro  { bottom: 7%; }
+  .fasteners__hotspot--eyelets { bottom: 30%; left: 83%; }
 
-  .fasteners__hotspot--velcro {
-    bottom: 7%;
-  }
-
-  .fasteners__hotspot--eyelets {
-    bottom: 30%;
-    left: 83%;
-  }
-
-   .fasteners__tabs {
-    flex-wrap: nowrap;      /* теперь ПОЛНЫЙ запрет переноса */
-    overflow-x: auto;       /* чтобы табы могли прокручиваться */
-    gap: 12px;              /* немного меньше расстояние */
-    padding-bottom: 4px;    /* для красоты */
+  /* Горизонтальная прокрутка табов */
+  .fasteners__tabs {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    gap: 12px;
+    padding-bottom: 4px;
   }
 
   .fasteners__tab {
-    font-size: 13px;        /* компактнее */
-    white-space: nowrap;    /* запрет переноса текста */
+    font-size: 13px;
+    white-space: nowrap;
   }
 }
-
-
-
-
 
 
 
 
 /* ============================================================
-   GALLERY — DESKTOP 3 CARDS / MOBILE 1 CARD SLIDER
+   GALLERY — адаптивная галерея: 3 карточки на десктопе / 1 слайд на мобильном
 ============================================================ */
-
 .gallery {
   background: #111;
   padding-block: clamp(24px, 4vw, 48px);
 }
 
+/* Основной контейнер слайдера */
 .gallery-slider {
   max-width: 1100px;
   margin-inline: auto;
@@ -1081,20 +1167,21 @@ body.scrolled .layout-header {
   position: relative;
 }
 
-/* скрытые переключатели */
+/* Радио-переключатели (скрытые) */
 .gallery-slider__control {
   display: none;
 }
 
-/* Лента */
+/* Лента карточек */
 .gallery-slider__inner {
   display: flex;
   width: 200%;
   transition: transform 0.4s ease;
 }
 
+
 /* -----------------------------------------------------------
-   DESKTOP — 3 карточки на слайде
+   DESKTOP — 3 карточки на один «слайд»
 ------------------------------------------------------------ */
 .gallery-slider__slide {
   width: 50%;
@@ -1103,6 +1190,7 @@ body.scrolled .layout-header {
   gap: 32px;
 }
 
+/* Карточка галереи */
 .gallery-slider__item {
   width: clamp(220px, 30%, 320px);
   aspect-ratio: 1/1;
@@ -1112,11 +1200,15 @@ body.scrolled .layout-header {
   transition: 0.25s ease;
 }
 
+/* Hover-эффект карточки */
 .gallery-slider__item:hover {
   transform: translateY(-4px);
 }
 
-/* Точки */
+
+/* -----------------------------------------------------------
+   Индикаторы-точки (desktop)
+------------------------------------------------------------ */
 .gallery-slider__dots {
   display: flex;
   justify-content: center;
@@ -1137,7 +1229,7 @@ body.scrolled .layout-header {
   transform: scale(1.25);
 }
 
-/* Активные точки */
+/* Активная точка + переключение слайдов по radio */
 #gal-1:checked ~ .gallery-slider__inner { transform: translateX(0); }
 #gal-2:checked ~ .gallery-slider__inner { transform: translateX(-50%); }
 
@@ -1146,13 +1238,13 @@ body.scrolled .layout-header {
   background: var(--color-accent);
 }
 
+
 /* ============================================================
-   MOBILE ≤ 768px — 1 КАРТИНКА, ГОРИЗОНТАЛЬНЫЙ SCROLL
-   (лучшие практики)
+   MOBILE ≤ 768px — скролл-слайдер одной карточкой (лучшие практики)
 ============================================================ */
 @media (max-width: 768px) {
 
-  /* Галерея становится скроллируемой */
+  /* Горизонтальный скролл вместо полноценных страниц */
   .gallery-slider {
     overflow-x: auto;
     overflow-y: hidden;
@@ -1160,7 +1252,7 @@ body.scrolled .layout-header {
     -webkit-overflow-scrolling: touch;
   }
 
-  /* Лента — одна строка без трансформаций */
+  /* Лента перестаёт быть «двухстраничной» */
   .gallery-slider__inner {
     display: flex;
     width: auto;
@@ -1168,16 +1260,16 @@ body.scrolled .layout-header {
     gap: 16px;
   }
 
-  /* Отключаем “страницы” */
+  /* Убираем структуру слайдов — все карточки в одной линии */
   .gallery-slider__slide {
     width: auto !important;
     flex-direction: row !important;
     flex-wrap: nowrap !important;
     gap: 16px;
-    display: contents;
+    display: contents; /* оживляет scroll-поведение */
   }
 
-  /* Каждая карточка = 1 экран */
+  /* Каждая карточка занимает ~1 экран */
   .gallery-slider__item {
     flex: 0 0 85%;
     min-width: 85%;
@@ -1189,19 +1281,16 @@ body.scrolled .layout-header {
     box-shadow: 0 8px 22px rgba(0,0,0,0.35);
   }
 
-  /* Прячем точки */
-  .gallery-slider__dots {
-    display: none !important;
-  }
-
-  /* Прячем radio-кнопки */
+  /* Прячем точки и radio */
+  .gallery-slider__dots,
   .gallery-slider__control {
     display: none !important;
   }
 }
 
+
 /* ============================================================
-   CUSTOM SCROLLBAR — прозрачный трек + красный ползунок
+   CUSTOM SCROLLBAR — минималистичный красный ползунок
 ============================================================ */
 
 /* Firefox */
@@ -1210,7 +1299,7 @@ body.scrolled .layout-header {
   scrollbar-color: var(--color-accent) transparent;
 }
 
-/* Chrome / Edge / Safari */
+/* WebKit browsers */
 .gallery-slider::-webkit-scrollbar {
   height: 10px;
   background: transparent;
@@ -1232,33 +1321,39 @@ body.scrolled .layout-header {
 
 
 
-/* BENEFITS ----------------------------------------------------------------- */
-
+/* BENEFITS -----------------------------------------------------------------
+   Секция преимуществ: сетка иконок + краткие описания
+--------------------------------------------------------------------------- */
 .benefits {
   background: #111;
   padding-bottom: clamp(26px, 8vw, 94px);
 }
 
+/* Внутренняя вертикальная структура */
 .benefits__inner {
   display: flex;
   flex-direction: column;
   gap: var(--space-xl);
 }
 
+/* Заголовок секции */
 .benefits__heading {
   text-align: center;
 }
 
+/* Адаптивная сетка карточек преимуществ */
 .benefits__grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
   gap: 24px;
 }
 
+/* Карточка преимущества */
 .benefit-card {
   text-align: center;
 }
 
+/* Круглая иконка */
 .benefit-card__icon {
   width: 90px;
   height: 90px;
@@ -1269,37 +1364,50 @@ body.scrolled .layout-header {
   justify-content: center;
 }
 
+/* Иконка внутри круга — фирменная красная обработка */
 .benefit-card__icon img {
   height: 80px;
   object-fit: contain;
-  filter: invert(14%) sepia(87%) saturate(7480%) hue-rotate(356deg) brightness(93%) contrast(118%);
+  filter: invert(14%) sepia(87%) saturate(7480%) hue-rotate(356deg)
+          brightness(93%) contrast(118%);
 }
 
+/* Заголовок карточки */
 .benefit-card__title {
   margin-top: 16px;
   font-size: 20px;
   font-weight: 700;
 }
 
+/* Текст карточки */
 .benefit-card__text {
   margin-top: 10px;
   font-size: 15px;
   color: #ddd;
 }
 
-/* ДЕСКТОП — всегда 4 в строку */
+/* -----------------------------------------------------------
+   ДЕСКТОП ≥ 992px — фиксированно 4 карточки в строке
+------------------------------------------------------------ */
 @media (min-width: 992px) {
   .benefits__grid {
     grid-template-columns: repeat(4, 1fr);
   }
 }
 
-/* CALCULATOR --------------------------------------------------------------- */
 
+
+
+/* CALCULATOR ---------------------------------------------------------------
+   Секция калькулятора стоимости: панель, форма, поля ввода
+--------------------------------------------------------------------------- */
+
+/* Фон секции */
 .calculator {
   background: #161616;
 }
 
+/* Основная панель калькулятора */
 .calculator__panel {
   max-width: 900px;
   margin-inline: auto;
@@ -1310,6 +1418,7 @@ body.scrolled .layout-header {
   box-shadow: 0 0 40px rgba(0,0,0,0.45);
 }
 
+/* Заголовочный блок */
 .calculator__header {
   text-align: center;
   margin-bottom: 32px;
@@ -1327,30 +1436,35 @@ body.scrolled .layout-header {
   font-size: 15px;
 }
 
+/* Основная форма */
 .calculator__form {
   display: flex;
   flex-direction: column;
   gap: 22px;
 }
 
+/* Ряд формы (стек на мобилке, горизонталь на таблетах) */
 .calculator__row {
   display: flex;
   flex-direction: column;
   gap: 18px;
 }
 
+/* Поле формы */
 .calculator__field {
   flex: 1;
   display: flex;
   flex-direction: column;
 }
 
+/* Подпись поля */
 .calculator__label {
   font-size: 14px;
   color: #bbb;
   margin-bottom: 6px;
 }
 
+/* Элемент управления (select/input) */
 .calculator__control {
   padding: 12px 14px;
   border-radius: 12px;
@@ -1361,13 +1475,19 @@ body.scrolled .layout-header {
   transition: 0.25s ease;
 }
 
+/* Фокус — красный акцент */
 .calculator__control:focus {
   outline: none;
   border-color: var(--color-accent);
 }
 
-/* FOOTER ------------------------------------------------------------------- */
 
+
+/* FOOTER -------------------------------------------------------------------
+   Нижняя часть сайта: сетка ссылок, контакты, копирайт
+--------------------------------------------------------------------------- */
+
+/* Основной контейнер футера */
 .layout-footer {
   background: #0f0f0f;
   color: #fff;
@@ -1375,27 +1495,32 @@ body.scrolled .layout-header {
   font-size: 15px;
 }
 
+/* Адаптивная сетка колонок */
 .layout-footer__inner {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(200px,1fr));
   gap: 32px;
 }
 
+/* Заголовки блоков футера */
 .layout-footer__title {
   font-size: 18px;
   font-weight: 700;
   margin-bottom: 12px;
 }
 
+/* Второстепенный текст */
 .layout-footer__muted {
   font-size: 14px;
   color: #bbb;
 }
 
+/* Отступы между ссылками */
 .layout-footer__list li + li {
   margin-top: 6px;
 }
 
+/* Ссылки футера */
 .layout-footer__list a {
   color: #ccc;
   transition: 0.2s;
@@ -1405,6 +1530,7 @@ body.scrolled .layout-header {
   color: #fff;
 }
 
+/* Социальные ссылки */
 .layout-footer__socials a {
   margin-right: 12px;
   font-weight: 600;
@@ -1414,6 +1540,7 @@ body.scrolled .layout-header {
   color: #ff4343;
 }
 
+/* Нижняя линия + копирайт */
 .layout-footer__bottom {
   margin-top: 30px;
   padding-top: 18px;
@@ -1423,8 +1550,11 @@ body.scrolled .layout-header {
   color: #777;
 }
 
+
+
 /* =========================================================
    PRODUCT SHEET (MODAL)
+   Модальное окно карточки товара: оверлей, панель, сетка
 ========================================================= */
 
 .product-sheet {
@@ -1434,6 +1564,7 @@ body.scrolled .layout-header {
   pointer-events: none;
 }
 
+/* Полупрозрачный затемняющий фон */
 .product-sheet__overlay {
   position: absolute;
   inset: 0;
@@ -1442,6 +1573,7 @@ body.scrolled .layout-header {
   transition: opacity 0.3s ease;
 }
 
+/* Основная панель модалки — bottom-sheet */
 .product-sheet__panel {
   position: absolute;
   left: 0;
@@ -1456,11 +1588,12 @@ body.scrolled .layout-header {
   display: flex;
   flex-direction: column;
 
-  /* === FIX: главный вертикальный скролл === */
+  /* Общий вертикальный скролл */
   overflow-y: auto;
   overflow-x: hidden;
 }
 
+/* Крестик закрытия */
 .product-sheet__close {
   position: absolute;
   right: 24px;
@@ -1469,6 +1602,7 @@ body.scrolled .layout-header {
   color: #000;
 }
 
+/* Основная таблица модалки: фото / характеристики / форма */
 .product-sheet__layout {
   margin-top: 24px;
   display: grid;
@@ -1477,18 +1611,20 @@ body.scrolled .layout-header {
   height: auto;
 }
 
+/* Убираем лишние внутренние скроллы колонок */
 .product-sheet__col,
 .product-sheet__col--details {
-  /* === FIX: убираем внутренние скроллы === */
   overflow: visible !important;
 }
 
+/* Колонка с формой заказа */
 .product-sheet__col--form {
   display: flex;
   flex-direction: column;
   gap: 18px;
 }
 
+/* Метка раздела */
 .product-sheet__label {
   font-size: 12px;
   text-transform: uppercase;
@@ -1497,6 +1633,7 @@ body.scrolled .layout-header {
   margin-bottom: 4px;
 }
 
+/* Название покрытия */
 .product-sheet__title {
   font-size: 24px;
   font-weight: 700;
@@ -1504,6 +1641,7 @@ body.scrolled .layout-header {
   color: #000;
 }
 
+/* Основное фото */
 .product-sheet__image {
   border-radius: 16px;
 }
@@ -1511,12 +1649,14 @@ body.scrolled .layout-header {
 
 /* =========================================================
    SLICE PREVIEW BUTTON
+   Кнопка и накладка с «срезом» покрытия
 ========================================================= */
 
 .product-sheet__image-wrapper {
     position: relative;
 }
 
+/* Красная круглая кнопка для slice-просмотра */
 .slice-toggle {
     position: absolute;
     bottom: 14px;
@@ -1538,8 +1678,7 @@ body.scrolled .layout-header {
     transform: scale(1.07);
 }
 
-/* SLICE overlay */
-
+/* Тёмная подложка для просмотра слоя */
 .slice-overlay {
     position: absolute;
     inset: 0;
@@ -1564,7 +1703,11 @@ body.scrolled .layout-header {
     object-fit: contain;
 }
 
-/* CONTENT BLOCKS -------------------------------------- */
+
+/* =========================================================
+   CONTENT BLOCKS
+   Заголовки, списки характеристик
+========================================================= */
 
 .product-sheet__block + .product-sheet__block {
   margin-top: 20px;
@@ -1586,7 +1729,11 @@ body.scrolled .layout-header {
   margin-top: 6px;
 }
 
-/* SIZE SELECTOR ---------------------------------------- */
+
+/* =========================================================
+   SIZE SELECTOR
+   Готовые размеры + кастомный ввод
+========================================================= */
 
 .size-selector {
   display: grid;
@@ -1595,7 +1742,7 @@ body.scrolled .layout-header {
   margin-top: 10px;
 }
 
-/* Кнопки размеров */
+/* Кнопки пресетов */
 .size-selector__button {
   padding: 8px 12px;
   border-radius: 50px;
@@ -1606,7 +1753,7 @@ body.scrolled .layout-header {
   transition: 0.25s ease;
 }
 
-/* Кнопка "Индивидуально" */
+/* Вариант «индивидуально» */
 .size-selector__button--outline {
   background: transparent;
   height: 44px;
@@ -1627,7 +1774,7 @@ body.scrolled .layout-header {
   border-color: var(--color-accent);
 }
 
-/* Поля Ш × Д — строго В ОДНОЙ СТРОКЕ */
+/* Контейнер для кастомных полей */
 .size-selector__custom {
   display: none;
   flex-direction: row;
@@ -1637,6 +1784,7 @@ body.scrolled .layout-header {
   margin-top: 14px;
 }
 
+/* Ряд Ш × Д */
 .size-selector__row {
   display: flex;
   flex-direction: row;
@@ -1644,7 +1792,7 @@ body.scrolled .layout-header {
   gap: 10px;
 }
 
-/* Поля Ш и Д */
+/* Поля ширины/длины */
 .size-selector__input {
   width: 70px;
   min-width: 70px;
@@ -1667,7 +1815,7 @@ body.scrolled .layout-header {
   line-height: 1;
 }
 
-/* Кнопка OK */
+/* Кнопка подтверждения */
 .size-selector__ok {
   padding: 8px 14px;
   height: 40px;
@@ -1683,7 +1831,10 @@ body.scrolled .layout-header {
 }
 
 
-/* PRICE CARD ------------------------------------------ */
+/* =========================================================
+   PRICE CARD
+   Черная карточка с ценой
+========================================================= */
 
 .product-sheet__price-card {
   background: #111;
@@ -1710,7 +1861,11 @@ body.scrolled .layout-header {
   color: #ccc;
 }
 
-/* FORM ----------------------------------------------- */
+
+/* =========================================================
+   FORM
+   Поля ввода контактов
+========================================================= */
 
 .product-sheet__form {
   display: flex;
@@ -1738,7 +1893,11 @@ body.scrolled .layout-header {
   border-color: var(--color-accent);
 }
 
-/* OPENED STATE ---------------------------------------- */
+
+/* =========================================================
+   OPENED STATE
+   Показ модалки
+========================================================= */
 
 .product-sheet--open {
   pointer-events: auto;
@@ -1752,8 +1911,10 @@ body.scrolled .layout-header {
   bottom: 0;
 }
 
+
 /* =========================================================
-   PRODUCT SHEET — CUSTOM SCROLLBAR (как в галерее)
+   CUSTOM SCROLLBAR
+   Минималистичный скроллбар как в галерее
 ========================================================= */
 
 .product-sheet__panel::-webkit-scrollbar {
@@ -1780,7 +1941,10 @@ body.scrolled .layout-header {
 }
 
 
-/* RESPONSIVE ----------------------------------------------------------------*/
+/* =========================================================
+   RESPONSIVE
+   Точки адаптации модалки
+========================================================= */
 
 /* Tablets and up */
 @media (min-width: 768px) {
@@ -1789,7 +1953,7 @@ body.scrolled .layout-header {
   }
 }
 
-/* Small screens */
+/* Small screens — скрываем часть хедера/соцбар */
 @media (max-width: 1024px) {
   .main-nav {
     display: none;
@@ -1805,7 +1969,7 @@ body.scrolled .layout-header {
   }
 }
 
-/* Phones */
+/* Phones — модалка на весь экран */
 @media (max-width: 600px) {
 
   .hero__cta {
@@ -1824,7 +1988,7 @@ body.scrolled .layout-header {
     padding-inline: 20px;
   }
 
-  /* МОДАЛКА — исправлено */
+  /* Полноэкранная модалка */
   .product-sheet__panel {
     border-radius: 0;
     max-height: 100vh;
