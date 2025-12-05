@@ -128,7 +128,7 @@ body.scrolled .layout-header {
 .burger__icon {
   font-size: clamp(26px, 7vw, 40px);
   line-height: 1;
-  color: #000;
+  color: #ff4444;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -260,9 +260,17 @@ body.scrolled .layout-header {
   color: var(--color-accent);
 }
 
+/* MOBILE PORTRAIT — полностью скрываем SOCIAL BAR */
+@media (max-width: 600px) and (orientation: portrait) {
+  .social-bar {
+    display: none !important;
+  }
+}
+
+
 /* ============================================================
-   HERO — полностью динамический, fluid, без media-queries
-   ============================================================ */
+   HERO — динамичный, fluid, без media-queries
+============================================================ */
 .hero {
     min-height: calc(100dvh - var(--header-height) - 3vh);
 
@@ -274,7 +282,6 @@ body.scrolled .layout-header {
     align-items: center;
     text-align: center;
 
-    /* Поддержка параллакса и слоёв */
     position: relative;
     overflow: hidden;
 }
@@ -282,8 +289,8 @@ body.scrolled .layout-header {
 
 
 /* ============================================================
-   BACKGROUND IMAGE — отдельный слой с лёгким размытием
-   ============================================================ */
+   HERO BACKGROUND — единый корректный слой (::after)
+============================================================ */
 .hero::after {
     content: "";
     position: absolute;
@@ -294,58 +301,39 @@ body.scrolled .layout-header {
     background-position: center;
     background-repeat: no-repeat;
 
-    filter: blur(4px);        /* ← Лёгкое размытие */
-    transform: scale(1.06);   /* Чтобы не было обрезаний по краям */
-
-    z-index: -1; /* ← Слой под всеми */
-}
-
-
-
-/* ============================================================
-   ::before — глобальное затемнение + премиальные градиенты
-   ============================================================ */
-.hero::before {
-    content: "";
-    position: absolute;
-    inset: 0;
-
-    background: linear-gradient(
-        rgba(0,0,0,0.70) 0%,
-        rgba(0,0,0,0.40) 35%,
-        rgba(0,0,0,0.55) 100%
-    );
-
-    z-index: 0;
-    pointer-events: none;
-}
-
-
-
-/* ============================================================
-   LAYER 1 — Размытый фон (::after)
-   ============================================================ */
-.hero::after {
-    content: "";
-    position: absolute;
-    inset: 0;
-
-    background-image: url('../images/background_3.png');
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-
+    /* базовое размытие и масштаб */
     filter: blur(0.5px);
-    transform: scale(1.06); /* убрать края после blur */
+    transform: scale(1.06);
+    transform-origin: center;
 
-    z-index: -1; /* самый нижний слой */
+    z-index: -2;
 }
 
 
 
 /* ============================================================
-   LAYER 2 — затемнение + виньетка + шум (::before)
-   ============================================================ */
+   MOBILE PORTRAIT — поворот фона на 90° + компенсация масштаба
+============================================================ */
+
+@media (max-width: 600px) and (orientation: portrait) {
+    .hero::after {
+        transform: rotate(90deg) scale(2.15);
+        transform-origin: center;
+
+        background-size: contain !important;
+
+        /* Поднимаем фон вверх, чтобы нижняя надпись ушла */
+        background-position: calc(50% -6%) calc(50% + 45%) !important;
+
+        background-repeat: no-repeat !important;
+    }
+}
+
+
+/* ============================================================
+   HERO OVERLAY LAYER (::before)
+   — глобальное затемнение + виньетка + шум
+============================================================ */
 .hero::before {
     content: "";
     position: absolute;
@@ -358,7 +346,7 @@ body.scrolled .layout-header {
             rgba(0,0,0,0) 40%,
             rgba(0,0,0,0.55) 100%
         ),
-        /* Темный вертикальный градиент */
+        /* Вертикальный градиент */
         linear-gradient(
             rgba(0,0,0,0.70) 0%,
             rgba(0,0,0,0.40) 35%,
@@ -370,7 +358,7 @@ body.scrolled .layout-header {
     opacity: 0.22;
     mix-blend-mode: overlay;
 
-    z-index: 0;
+    z-index: -1;
     pointer-events: none;
 }
 
@@ -378,7 +366,7 @@ body.scrolled .layout-header {
 
 /* ============================================================
    HERO CONTENT — центральная адаптивная колонна
-   ============================================================ */
+============================================================ */
 .hero__container {
     position: relative;
     z-index: 3;
@@ -649,6 +637,19 @@ body.scrolled .layout-header {
     color: var(--color-text-soft);
 }
 
+/* ============================================================
+   DESKTOP GRID FOR 1440
+============================================================ */
+@media (min-width: 800px) and (max-width: 1439px) {
+    .mats__grid {
+        grid-template-columns: repeat(4, 1fr); /* фиксируем 4 карточки */
+        gap: clamp(20px, 2vw, 32px);
+    }
+
+    .mat-card {
+        max-width: none; /* убрать ограничение 280px, чтобы вписывались */
+    }
+}
 
 /* ============================================================
    MOBILE MODE (<= 700px)
@@ -707,6 +708,361 @@ body.scrolled .layout-header {
         font-size: 16px;
     }
 }
+
+
+
+
+
+
+
+
+/* ============================================================================
+   FASTENERS — общий контейнер
+============================================================================ */
+.fasteners {
+  background: #111;
+  color: #fff;
+}
+
+/* ============================================================================
+   СВЕРНУТАЯ ШАПКА
+============================================================================ */
+.fasteners__header {
+  width: 100%;
+  border: none;
+  background: #1a1a1a;
+  padding: 24px 0;
+  cursor: pointer;
+}
+
+.fasteners__header-inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+}
+
+.fasteners__title {
+  margin: 10px;
+  font-size: 26px;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: #e60012;
+}
+
+.fasteners__subtitle {
+  margin: 0;
+  font-size: 14px;
+  color: #ccc;
+}
+
+.fasteners__toggle {
+  width: 18px;
+  height: 18px;
+  border-right: 2px solid rgba(255,255,255,0.85);
+  border-bottom: 2px solid rgba(255,255,255,0.85);
+  transform: rotate(45deg); /* ▼ вниз */
+  transition: transform .25s ease, opacity .25s ease;
+  margin-top: 10px;
+
+  animation: bounce 1.8s infinite ease-in-out;
+  display: inline-block;
+}
+
+.fasteners--open .fasteners__toggle {
+  transform: rotate(-135deg);
+  animation: none;
+}
+
+@keyframes bounce {
+  0%, 100% {
+    transform: translateY(0) rotate(45deg);
+  }
+  50% {
+    transform: translateY(5px) rotate(45deg);
+  }
+}
+
+
+/* ============================================================================
+   РАЗВОРАЧИВАЕМАЯ ОБЛАСТЬ
+============================================================================ */
+.fasteners__content {
+  max-height: 0;
+  opacity: 0;
+  overflow: hidden;
+  transition: max-height .35s ease, opacity .3s ease;
+}
+
+.fasteners__content.active {
+  max-height: 3000px;
+  opacity: 1;
+}
+
+.fasteners__inner {
+  width: min(1100px, 88%);
+  margin: 40px auto 120px;
+}
+
+/* ============================================================================
+   ЛЕВЫЙ + ПРАВЫЙ БЛОКИ
+============================================================================ */
+.fasteners__layout {
+  display: grid;
+  grid-template-columns: 0.9fr 1.1fr;
+  gap: clamp(24px, 4vw, 40px);
+  align-items: flex-start;
+}
+
+/* ============================================================================
+   СХЕМА (левый блок)
+============================================================================ */
+.fasteners__scheme {
+  display: flex;
+  justify-content: center;
+}
+
+.fasteners__scheme-base {
+  position: relative;
+
+  /* ← ВАЖНО: ИМЕННО ЭТО УБИВАЕТ ПРОБЛЕМУ 430px */
+  width: 520px !important;
+  max-width: 100%;
+  margin: 0 auto;
+}
+
+/* НЕОН-картинка */
+.fasteners__scheme-image {
+  display: block;
+  width: 100%;
+  border-radius: 18px;
+  transition: opacity .25s ease;
+}
+
+
+/* ============================================================================
+    КРУГ — главное изображение
+============================================================================ */
+.fasteners__circle-image {
+  position: absolute;
+  top: 22%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 55%;
+  aspect-ratio: 1 / 1;
+  border-radius: 50%;
+  border: 8px solid white;
+  display: none;
+  overflow: hidden;
+  z-index: 5; /* поверх neon */
+}
+
+.fasteners__circle-image--active {
+  display: block;
+}
+
+.fasteners__circle-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: none;
+}
+
+.fasteners__circle-image img.circle-active {
+  display: block;
+}
+
+.fasteners__circle-label {
+  position: absolute;
+  bottom: 6%;
+  left: 50%;
+  transform: translateX(-50%);
+  color: white;
+  font-size: 18px;
+  font-weight: 600;
+  letter-spacing: .05em;
+}
+
+/* ============================================================================
+   HOTSPOT-КНОПКИ (внутри схемы)
+============================================================================ */
+.fasteners__hotspot {
+  position: absolute;
+  padding: 6px 14px;
+  font-size: 11px;
+  text-transform: uppercase;
+  color: #fff;
+  cursor: pointer;
+  transition: .25s ease;
+  white-space: nowrap;
+  z-index: 10;
+}
+
+
+/* карманы — справа сверху */
+.fasteners__hotspot--pockets {
+  bottom: 92%;
+  left: 68%;
+}
+
+/* липучки — нижний центр */
+.fasteners__hotspot--velcro {
+  bottom: 6%;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+/* люверсы — справа снизу */
+.fasteners__hotspot--eyelets {
+  bottom: 25%;
+  right: 0%;
+  transform: rotate(90deg);
+}
+
+/* активная */
+.fasteners__hotspot--active {
+  background: #e60012;
+  box-shadow: 0 0 14px #e60012;
+}
+
+/* ============================================================================
+   ПРАВАЯ ЧАСТЬ (табы + текст)
+============================================================================ */
+.fasteners__info {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.fasteners__tabs {
+  display: flex;
+  gap: 18px;
+  flex-wrap: wrap;
+}
+
+.fasteners__tab {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: .14em;
+  color: #777;
+  position: relative;
+}
+
+.fasteners__tab--active {
+  color: #e60012;
+}
+
+.fasteners__tab--active::after {
+  content: "";
+  position: absolute;
+  left: 0; right: 0;
+  bottom: -4px;
+  height: 1px;
+  background: #e60012;
+}
+
+/* панели */
+.fasteners__panel {
+  display: none;
+}
+.fasteners__panel--active {
+  display: block;
+}
+
+.fasteners__panel-title {
+  white-space: nowrap;
+  font-weight: 700;
+  margin-bottom: 10px;
+  font-size: clamp(14px, 4vw, 20px); /* динамический масштаб */
+  line-height: 1.1;
+}
+
+
+.fasteners__panel-text {
+  font-size: 15px;
+  color: #ddd;
+  line-height: 1.55;
+}
+
+/* -- тонкая полоса -- */
+.fasteners-line {
+  left: 0;
+  bottom: 20;
+  width: 100%;
+  height: 5px;
+  background: rgba(255,255,255,0.15);
+  z-index: 10000;
+  pointer-events: none;
+}
+
+
+/* ============================================================================
+   МОБИЛЬНАЯ АДАПТАЦИЯ
+============================================================================ */
+@media (max-width: 768px) {
+
+  .fasteners__inner {
+    margin: 32px auto 80px;
+  }
+
+  .fasteners__layout {
+    grid-template-columns: 1fr;
+  }
+
+  .fasteners__scheme-base {
+    width: 92% !important;
+  }
+
+  .fasteners__circle-image {
+    width: 55%;
+    top: 20%;
+  }
+
+  .fasteners__circle-label {
+    font-size: 16px;
+  }
+
+  .fasteners__hotspot {
+    font-size: 10px;
+    padding: 5px 10px;
+  }
+
+  .fasteners__hotspot--pockets {
+    bottom: 92%;
+    left: 66%;
+  }
+
+  .fasteners__hotspot--velcro {
+    bottom: 7%;
+  }
+
+  .fasteners__hotspot--eyelets {
+    bottom: 30%;
+    left: 83%;
+  }
+
+   .fasteners__tabs {
+    flex-wrap: nowrap;      /* теперь ПОЛНЫЙ запрет переноса */
+    overflow-x: auto;       /* чтобы табы могли прокручиваться */
+    gap: 12px;              /* немного меньше расстояние */
+    padding-bottom: 4px;    /* для красоты */
+  }
+
+  .fasteners__tab {
+    font-size: 13px;        /* компактнее */
+    white-space: nowrap;    /* запрет переноса текста */
+  }
+}
+
+
+
+
+
+
 
 
 /* ============================================================
@@ -895,8 +1251,8 @@ body.scrolled .layout-header {
 
 .benefits__grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-  gap: 32px;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 24px;
 }
 
 .benefit-card {
@@ -916,7 +1272,7 @@ body.scrolled .layout-header {
 .benefit-card__icon img {
   height: 80px;
   object-fit: contain;
-  filter: brightness(0) saturate(100%) invert(28%) sepia(98%) saturate(7496%) hue-rotate(358deg) brightness(98%) contrast(109%);
+  filter: invert(14%) sepia(87%) saturate(7480%) hue-rotate(356deg) brightness(93%) contrast(118%);
 }
 
 .benefit-card__title {
@@ -929,6 +1285,13 @@ body.scrolled .layout-header {
   margin-top: 10px;
   font-size: 15px;
   color: #ddd;
+}
+
+/* ДЕСКТОП — всегда 4 в строку */
+@media (min-width: 992px) {
+  .benefits__grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
 }
 
 /* CALCULATOR --------------------------------------------------------------- */
@@ -1145,6 +1508,62 @@ body.scrolled .layout-header {
   border-radius: 16px;
 }
 
+
+/* =========================================================
+   SLICE PREVIEW BUTTON
+========================================================= */
+
+.product-sheet__image-wrapper {
+    position: relative;
+}
+
+.slice-toggle {
+    position: absolute;
+    bottom: 14px;
+    right: 14px;
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+    background: #E60012;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 0 12px rgba(0,0,0,0.4);
+    transition: transform 0.2s ease;
+}
+
+.slice-toggle:hover {
+    transform: scale(1.07);
+}
+
+/* SLICE overlay */
+
+.slice-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(0,0,0,0.65);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+    border-radius: 14px;
+}
+
+.slice-overlay.active {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.slice-overlay__img {
+    max-width: 85%;
+    max-height: 85%;
+    object-fit: contain;
+}
+
 /* CONTENT BLOCKS -------------------------------------- */
 
 .product-sheet__block + .product-sheet__block {
@@ -1190,11 +1609,11 @@ body.scrolled .layout-header {
 /* Кнопка "Индивидуально" */
 .size-selector__button--outline {
   background: transparent;
-  height: 44px;                     /* фиксированная высота */
+  height: 44px;
   display: flex;
   align-items: center;
   justify-content: center;
-  min-width: 100%;                  /* чтобы ширина не прыгала */
+  min-width: 100%;
 }
 
 .size-selector__button:hover {
@@ -1210,25 +1629,25 @@ body.scrolled .layout-header {
 
 /* Поля Ш × Д — строго В ОДНОЙ СТРОКЕ */
 .size-selector__custom {
-  display: none;                    /* по умолчанию скрыт */
+  display: none;
   flex-direction: row;
   align-items: center;
   justify-content: flex-start;
-  gap: 10px;                        /* расстояние между элементами */
+  gap: 10px;
   margin-top: 14px;
 }
 
 .size-selector__row {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    gap: 10px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 10px;
 }
 
 /* Поля Ш и Д */
 .size-selector__input {
   width: 70px;
-  min-width: 70px;                  /* фиксируем, чтобы не схлопывались */
+  min-width: 70px;
   padding: 8px 10px;
   border-radius: 8px;
   border: 1px solid #ccc;
@@ -1244,7 +1663,7 @@ body.scrolled .layout-header {
   font-size: 18px;
   font-weight: 700;
   color: #000;
-  width: 20px;                      /* фиксированная ширина */
+  width: 20px;
   line-height: 1;
 }
 
@@ -1252,7 +1671,7 @@ body.scrolled .layout-header {
 .size-selector__ok {
   padding: 8px 14px;
   height: 40px;
-  min-width: 55px;                   /* чтобы OK не расползался */
+  min-width: 55px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -1260,7 +1679,7 @@ body.scrolled .layout-header {
   background: var(--color-accent);
   color: #fff;
   font-size: 13px;
-  white-space: nowrap;               /* текст не переносится */
+  white-space: nowrap;
 }
 
 
@@ -1332,6 +1751,7 @@ body.scrolled .layout-header {
 .product-sheet--open .product-sheet__panel {
   bottom: 0;
 }
+
 /* =========================================================
    PRODUCT SHEET — CUSTOM SCROLLBAR (как в галерее)
 ========================================================= */
@@ -1342,6 +1762,7 @@ body.scrolled .layout-header {
 
 .product-sheet__panel::-webkit-scrollbar-track {
   background: transparent;
+}
 
 .product-sheet__panel::-webkit-scrollbar-thumb {
   background: var(--color-bg-alt);
@@ -1350,6 +1771,7 @@ body.scrolled .layout-header {
 
 .product-sheet__panel::-webkit-scrollbar-thumb:hover {
   background: var(--color-accent-hover);
+}
 
 /* Firefox */
 .product-sheet__panel {
@@ -1411,9 +1833,16 @@ body.scrolled .layout-header {
   }
 
   .product-sheet__layout {
-    grid-template-columns: 1fr;
+    grid-template-columns: 1fr !important;
     gap: 20px;
-    overflow-y: visible;              /* layout НЕ должен прокручиваться */
+    overflow-y: visible;
   }
 }
 
+@media (max-width: 600px) {
+  .product-sheet__layout {
+    grid-template-columns: 1fr !important;
+    gap: 20px;
+    overflow-y: visible;
+  }
+}
