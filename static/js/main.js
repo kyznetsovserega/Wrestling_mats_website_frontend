@@ -1,19 +1,19 @@
 /* ============================================================================
-   GLOBAL STATE
+   GLOBAL STATE — активная карточка в модалке
 ============================================================================ */
 let currentCard = null; // активная карточка для модалки
 
 
 
 /* ============================================================================
-   READY
+   READY — инициализация после загрузки DOM
 ============================================================================ */
 document.addEventListener("DOMContentLoaded", () => {
 
 
 
 /* ============================================================================
-   HEADER SCROLL
+   HEADER SCROLL — смена стиля хедера при скролле
 ============================================================================ */
 document.addEventListener("scroll", () => {
     document.body.classList.toggle("scrolled", window.scrollY > 160);
@@ -22,7 +22,7 @@ document.addEventListener("scroll", () => {
 
 
 /* ============================================================================
-   BURGER
+   BURGER — мобильное меню
 ============================================================================ */
 const burger = document.getElementById("burger");
 const mobileNav = document.getElementById("mobileNav");
@@ -44,7 +44,7 @@ if (burger && mobileNav) {
 
 
 /* ============================================================================
-   SOCIAL BAR
+   SOCIAL BAR — скрытие боковой панели под HERO
 ============================================================================ */
 const hero = document.getElementById("hero");
 const socialBar = document.querySelector(".social-bar");
@@ -61,7 +61,7 @@ updateSocialBar();
 
 
 /* ================================================
-   HERO PARALLAX + DYNAMIC VIGNETTE
+   HERO PARALLAX — движение фона и виньетки
    ================================================ */
 
 document.addEventListener("mousemove", (e) => {
@@ -72,20 +72,20 @@ document.addEventListener("mousemove", (e) => {
     const x = (e.clientX - rect.left) / rect.width;
     const y = (e.clientY - rect.top) / rect.height;
 
-    /* Параллакс: движем фон */
+    // параллакс
     const moveX = (x - 0.5) * 10;  // сила эффекта
     const moveY = (y - 0.5) * 10;
 
     hero.style.backgroundPosition = `${50 + moveX}% ${50 + moveY}%`;
 
-    /* Движение виньетки */
+    // виньетка
     hero.style.setProperty("--x", `${x * 100}%`);
     hero.style.setProperty("--y", `${y * 100}%`);
 });
 
 
 /* ============================================================================
-   PRODUCT SHEET (MODAL)
+   PRODUCT SHEET — модалка карточки ковра
 ============================================================================ */
 const sheet = document.getElementById("productSheet");
 const sheetOverlay = sheet?.querySelector(".product-sheet__overlay");
@@ -117,28 +117,24 @@ const presetPrices = {
 
 
 // -------------------------------
-// OPEN MODAL
+// OPEN — открыть модалку
 // -------------------------------
 function openSheet() {
     sheet.classList.add("product-sheet--open");
     sheet.removeAttribute("hidden");
     document.body.style.overflow = "hidden";
-
-    // ставим фокус внутрь модалки (чтобы ARIA не ругалась)
-    sheetClose?.focus();
+    sheetClose?.focus(); // фокус внутрь модалки
 }
 
 
 // -------------------------------
-// CLOSE MODAL (ARIA FIX)
+// CLOSE — закрыть модалку
 // -------------------------------
 function closeSheet() {
     sheet.classList.remove("product-sheet--open");
     sheet.setAttribute("hidden", "");
     document.body.style.overflow = "";
-
-    // FIX: убираем фокус, чтобы не было ARIA warnings
-    document.activeElement.blur();
+    document.activeElement.blur();  // снятие фокуса
 }
 
 sheetClose?.addEventListener("click", closeSheet);
@@ -146,9 +142,8 @@ sheetOverlay?.addEventListener("click", closeSheet);
 
 
 
-
 /* ============================================================================
-   FILL & OPEN SHEET FROM CARD
+   FILL & OPEN — заполнение модалки данными карточки
 ============================================================================ */
 document.querySelectorAll(".mat-card").forEach(card => {
     const expandBtn = card.querySelector(".mat-card__expand");
@@ -165,8 +160,8 @@ document.querySelectorAll(".mat-card").forEach(card => {
 
         // Характеристики
         sheetSpecs.innerHTML = `
+            <li><strong>Тип мягкой подложки: </strong> ${card.dataset.type}</li>
             <li><strong>Покрытие ПВХ:</strong> плотность 650 г/м²</li>
-            <li><strong>Тип мата:</strong> ${card.dataset.type}</li>
             <li><strong>Плотность:</strong> ${card.dataset.density}</li>
             <li><strong>Срок службы:</strong> ${card.dataset.life}</li>
             <li><strong>Рекомендации:</strong> ${card.dataset.recommend}</li>
@@ -183,20 +178,20 @@ document.querySelectorAll(".mat-card").forEach(card => {
 
         // Slice image
         sliceOverlay.classList.remove("active");
-        sliceImg.src = cardImg.dataset.hover; // slice-картинка из карточки
+        sliceImg.src = cardImg.dataset.hover;
 
         openSheet();
     };
 
+    // триггеры открытия
     expandBtn?.addEventListener("click", openFromCard);
     cardImg?.addEventListener("click", openFromCard);
 });
 
 
 
-
 /* ============================================================================
-   SIZE SELECTOR
+   SIZE SELECTOR — выбор размера и автоподсчёт цены
 ============================================================================ */
 sizeButtons.forEach(btn => btn.addEventListener("click", () => {
     sizeButtons.forEach(b => b.classList.remove("active"));
@@ -218,6 +213,7 @@ sizeButtons.forEach(btn => btn.addEventListener("click", () => {
 }));
 
 
+// расчёт цены для своих размеров
 function calcCustomPrice() {
     const w = parseFloat(customWidth.value.replace(",", "."));
     const h = parseFloat(customHeight.value.replace(",", "."));
@@ -236,9 +232,8 @@ customOk?.addEventListener("click", calcCustomPrice);
 
 
 
-
 /* ============================================================================
-   SCROLL TO FORM ON MOBILE
+   MOBILE SCROLL — автопрокрутка к форме на мобилке
 ============================================================================ */
 function scrollToSheetFormOnMobile() {
     if (window.innerWidth >= 1024) return;
@@ -251,9 +246,8 @@ customOk?.addEventListener("click", scrollToSheetFormOnMobile);
 
 
 
-
 /* ============================================================================
-   CARD IMAGE HOVER
+   CARD HOVER — предпросмотр разреза (hover)
 ============================================================================ */
 document.querySelectorAll('.mat-card__image').forEach(img => {
     const defaultSrc = img.dataset.default;
@@ -266,7 +260,7 @@ document.querySelectorAll('.mat-card__image').forEach(img => {
 
 
 /* ============================================================================
-   SLICE TOGGLE (INSIDE MODAL)
+   SLICE TOGGLE — показать/скрыть разрез в модалке
 ============================================================================ */
 sliceBtn?.addEventListener("click", () => {
     if (!currentCard) return;
@@ -279,9 +273,8 @@ sliceBtn?.addEventListener("click", () => {
 
 
 
-
 /* ============================================================================
-   CONTACTS BUTTON (outside ready)
+   CONTACTS BUTTON — переход на страницу контактов
 ============================================================================ */
 document.getElementById("contacts-btn")?.addEventListener("click", () => {
     window.location.href = "https://prospectboxing.ru/contacts";
@@ -290,13 +283,14 @@ document.getElementById("contacts-btn")?.addEventListener("click", () => {
 
 
 /* ============================================================================
-
+   FASTENERS SECTION — табы, схема, переключение методов
 ============================================================================ */
 
 document.addEventListener("DOMContentLoaded", () => {
   const fasteners = document.querySelector(".fasteners");
   if (!fasteners) return;
 
+  // элементы секции
   const headerBtn    = fasteners.querySelector(".fasteners__header");
   const content      = fasteners.querySelector(".fasteners__content");
 
@@ -312,7 +306,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
   /* ============================================================
-     1) Открытие / закрытие секции
+     OPEN / CLOSE — разворот секции
   ============================================================ */
   headerBtn.addEventListener("click", () => {
     const willOpen = !content.classList.contains("active");
@@ -327,11 +321,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
   /* ============================================================
-     2) Главная функция выбора метода
+     setMethod — переключение режима (таб + схема)
   ============================================================ */
   function setMethod(method) {
 
-    /* --- 2.1 Табы --- */
+    // табы
     tabs.forEach(tab => {
       tab.classList.toggle(
         "fasteners__tab--active",
@@ -339,7 +333,7 @@ document.addEventListener("DOMContentLoaded", () => {
       );
     });
 
-    /* --- 2.2 Текстовые панели --- */
+    // панели контента
     panels.forEach(panel => {
       panel.classList.toggle(
         "fasteners__panel--active",
@@ -347,11 +341,11 @@ document.addEventListener("DOMContentLoaded", () => {
       );
     });
 
-    /* --- 2.3 НЕОН-схема скрывается / появляется --- */
+    // скрытие/показ неон-схемы
     fasteners.classList.toggle("fasteners--method-selected", method !== "overview");
 
 
-    /* --- 2.4 Красные круглые точки (новые) --- */
+     // нижние точки (не включено)
     dots.forEach(dot => {
       dot.classList.toggle(
         "fasteners__dot--active",
@@ -360,7 +354,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
 
-    /* --- 2.5 Круглая фотография --- */
+    // большая круглая фотография
     if (method === "overview") {
       circleBlock.classList.remove("fasteners__circle-image--active");
     } else {
@@ -375,7 +369,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
 
-    /* --- 2.6 Текст внутри красного круга --- */
+    // текст внутри круга
     const labels = {
       pockets: "КАРМАНЫ",
       velcro: "ЛИПУЧКИ",
@@ -387,7 +381,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
   /* ============================================================
-     3) Клик по табам
+     TAB CLICK
   ============================================================ */
   tabs.forEach(tab => {
     tab.addEventListener("click", () => {
@@ -397,7 +391,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
   /* ============================================================
-     4) Клик по старым hotspot-кнопкам
+     HOTSPOT CLICK — клики по старым меткам
   ============================================================ */
   hotspots.forEach(h => {
     h.addEventListener("click", () => {
@@ -407,7 +401,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
   /* ============================================================
-     5) Клик по НОВЫМ круговым точкам
+     5) DOT CLICK — клики по новым точкам
   ============================================================ */
   dots.forEach(dot => {
     dot.addEventListener("click", () => {
